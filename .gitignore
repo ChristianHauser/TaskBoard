@@ -1,1 +1,16 @@
-.env
+# Node / React 
+node_modules/
+frontend/.env
+frontend/dist/
+
+# PHP / Composer
+vendor/
+backend/.env
+
+# IDEs
+*.log
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
