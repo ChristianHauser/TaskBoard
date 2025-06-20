@@ -4,17 +4,17 @@
 import { useState } from 'react';
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     // Call your PHP API login endpoint
-    const res = await fetch('http://localhost/taskboard-api/api/login.php', {
+    const res = await fetch('http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/login.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ email, password }),
     });
 
     const data = await res.json();
@@ -30,13 +30,13 @@ export default function LoginPage() {
   return (
     <div className='mainContainer'>
         <form onSubmit={handleSubmit}>
-            <label htmlFor='username'>Username</label> <br/>
+            <label htmlFor='email'>Email</label> <br/>
             <input
-                id='username'
+                id='email'
                 type="text"
-                placeholder="Username"
-                value={username}
-                onChange={e => setUsername(e.target.value)}
+                placeholder="Email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
                 required
             />
             <br />

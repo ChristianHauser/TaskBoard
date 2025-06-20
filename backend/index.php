@@ -11,19 +11,8 @@
 </html>
 
 <?php
-
-    $host = "localhost";
-    $user = "root";
-    $password = "12345";
-    $dbName = "taskboard";
-
-    //data source n dsn
-    $dsn = "mysql:host=$host;dbname=$dbName";
-
-    //Pdo instanz
-    $pdo = new PDO(dsn: $dsn,username: $user, password: $password);
-    $pdo -> setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-
+    
+    require_once __DIR__ . "/db/config.php";
     //pdo query
     /* $stmt = $pdo->query("SELECT * FROM user");
 
@@ -31,7 +20,13 @@
     while($row = $stmt->fetch()){
         echo $row->user_name . "<br>";
     } */
-
+    $email = "mr.chris.chris1@gmail.com";
+    $newPass = "12345";
+    $hashedPass = password_hash($newPass, PASSWORD_DEFAULT);
+    $sql = ("UPDATE user SET password = ? WHERE email = ?");
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$hashedPass ,$email]);
+    //$user = $stmt->fetch();
 
     //UNSAFE
     //$sql = "SELECT * FROM taskboard WHERE user = $user";
@@ -41,10 +36,10 @@
     $createdAt = "2025-06-17";
 
     //POSITIONAL PARAMETERS
-    $sql = "SELECT * FROM user WHERE password = ?";
+    /* $sql = "SELECT * FROM user WHERE password = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$password]);
-    $users = $stmt->fetchAll();
+    $users = $stmt->fetchAll(); */
 
     //NAMED PARAMETERS
     /* $sql = "SELECT * FROM user WHERE password = :password && created_at >= :createdAt1 && created_at < DATE_ADD( :createdAt2 , INTERVAL 1 DAY)";
@@ -54,9 +49,9 @@
 
     //var_dump($users);
 
-    foreach($users as $user){
+    /* foreach($users as $user){
         echo $user->user_name . "<br>";
-    }
+    } */
 
     
     //FETCH SINGLE POST
