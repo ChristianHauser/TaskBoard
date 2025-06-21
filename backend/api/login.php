@@ -3,17 +3,20 @@ require_once __DIR__ ."/../db/config.php";
 /* var_dump(getenv("DB_PASS"));
 var_dump($pdo);
 exit; */
+
+session_start();
+
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: http://localhost:3000");
 
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
-
-session_start();
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 
 
 
+
+var_dump(session_get_cookie_params());
 // Handle preflight (OPTIONS request)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -39,6 +42,8 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     echo json_encode(["error" => "Invalid email format."]);
     exit;
 }
+
+
 
 $sql = ("SELECT * FROM user WHERE email = ?");
 $stmt = $pdo->prepare($sql);

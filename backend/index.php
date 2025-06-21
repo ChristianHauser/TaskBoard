@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,12 +22,18 @@
     while($row = $stmt->fetch()){
         echo $row->user_name . "<br>";
     } */
-    $email = "mr.chris.chris1@gmail.com";
+
+
+    /* $email = "mr.chris.chris1@gmail.com";
     $newPass = "12345";
     $hashedPass = password_hash($newPass, PASSWORD_DEFAULT);
     $sql = ("UPDATE user SET password = ? WHERE email = ?");
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$hashedPass ,$email]);
+    $stmt->execute([$hashedPass ,$email]); */
+
+
+
+
     //$user = $stmt->fetch();
 
     //UNSAFE
@@ -34,7 +42,8 @@
     //FETCH MULTIPLE POSTS
     $password = "1234";
     $createdAt = "2025-06-17";
-
+    $_SESSION ["password"] = $password;
+    $_SESSION ["createdAt"] = $createdAt;
     //POSITIONAL PARAMETERS
     /* $sql = "SELECT * FROM user WHERE password = ?";
     $stmt = $pdo->prepare($sql);
