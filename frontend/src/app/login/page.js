@@ -6,6 +6,17 @@ import { useState } from 'react';
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPass, setShowPass] = useState(false);
+  
+  
+
+  const showPasswordHandlers =  {
+    onMouseDown: () => setShowPass(true),
+    onMouseUp: () => setShowPass(false),
+    onMouseLeave: () => setShowPass(false),
+    onTouchStart: () => setShowPass(true),
+    onTouchEnd: () => setShowPass(false),
+  };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -44,14 +55,15 @@ export default function LoginPage() {
             <label htmlFor='password'>Password</label><br/>
             <input
                 id='password'
-                type="password"
+                type={showPass ? "text":"password"}
                 placeholder="Password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 required
             />
+            <button className="togglePassBtn" type='button' {...showPasswordHandlers}>{showPass ? "Hide" : "Show"}</button>
             <br />
-            <button type="submit">Log In</button>
+            <button className='submitBtn' type="submit">Log In</button>
         </form>
     </div>
   );

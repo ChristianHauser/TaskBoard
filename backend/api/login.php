@@ -16,7 +16,7 @@ header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 
 
 
-var_dump(session_get_cookie_params());
+//var_dump(session_get_cookie_params());
 // Handle preflight (OPTIONS request)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -50,7 +50,7 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute([$email]);
 $user = $stmt->fetch();
 
-if($user && password_verify($password, $user->password)){
+if($user && password_verify($password,  $user->password)){
     $_SESSION['id'] = $user->id;
     echo json_encode(["message"=> "Login successfull!"]);
 }else{
