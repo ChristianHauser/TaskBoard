@@ -1,8 +1,6 @@
 <?php
-require_once __DIR__ ."/../db/config.php";
-/* var_dump(getenv("DB_PASS"));
-var_dump($pdo);
-exit; */
+/* require_once __DIR__ ."/../db/config.php";
+
 
 session_start();
 
@@ -15,9 +13,6 @@ header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 
 
 
-
-//var_dump(session_get_cookie_params());
-// Handle preflight (OPTIONS request)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
@@ -57,7 +52,6 @@ if($user && password_verify($password,  $user->password)){
     http_response_code(400);
     echo json_encode(["error"=> "Wrong email or password"]);
 }
+ */
 
-
-
-//if (isset($_SESSION["id"])) {
+ ?>

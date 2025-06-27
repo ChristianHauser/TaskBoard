@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ ."/../db/config.php";
+/* require_once __DIR__ ."/../db/config.php";
 require_once __DIR__ ."/../loadAnyEnv.php";
 
 require __DIR__ ."/../vendor/autoload.php";
@@ -84,4 +84,4 @@ if($user->email_verified){
 }
 
 echo json_encode(["success"=> true,"message"=>"registered new user"]);
-exit();
+exit(); */
