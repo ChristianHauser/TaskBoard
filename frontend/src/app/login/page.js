@@ -1,6 +1,7 @@
 // app/login/page.js
 'use client';  // client-side React component
-
+import {auth} from "../firebaseConfig/firebaseInit";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from 'react';
 
 export default function LoginPage() {
@@ -20,23 +21,14 @@ export default function LoginPage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
-    // Call your PHP API login endpoint
-    const res = await fetch('http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/login.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-      credentials: 'include',
-    });
-
-    const data = await res.json();
-
-    if (res.ok) {
-      alert('Login successful!');
-      // You can store auth token, redirect, etc.
-    } else {
-      alert('Login failed: ' + data.message);
+    try{
+      const login = await signInWithEmailAndPassword(auth,email,password);
+      console.log("Logged IN YUHU");
+    }catch(err){
+      console.error(err);
     }
+    
+   
   }
 
   return (

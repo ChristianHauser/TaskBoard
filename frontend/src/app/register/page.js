@@ -1,10 +1,16 @@
 'use client';
 import { sendError } from "next/dist/server/api-utils";
 import { useState } from "react";
+import {auth} from "../firebaseConfig/firebaseInit";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+
+
 export default function RegisterPage(){
 
     const [showPass, setShowPass] = useState(false);
     const [showRedoPass, setShowRedoPass] = useState(false);
+
+    
 
     const [userRegistrationData, setUserRegistrationData] = useState({
             user_name: "",
@@ -19,21 +25,17 @@ export default function RegisterPage(){
             alert("Passwords do not match");
             return;
         }
-        const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/register.php",{
-            method:"POST",
-            headers: {"Content-Type":"application/json"},
-            body: JSON.stringify({...userRegistrationData}),
-            credentials: "include"
-        });
-        const data = await res.json();
+        try {
+                const userCredential = await createUserWithEmailAndPassword(auth, userRegistrationData.email, userRegistrationData.password);
+                console.log(userCredential.user.uid);
 
-        if (res.ok) {
-        alert('Registration successful!');
-        // You can store auth token, redirect, etc.
-        } else {
-        alert('Registration failed: ' + data.message);
-        }
-        console.log(res);
+                await sendEmailVerification(userCredential.user);
+
+                // store other user data in your DB if needed, using userCredential.user.uid
+            } catch (err) {
+                console.error(err);
+            }
+        
     }
 
     const handleSetRegisData = (e) =>{
