@@ -1,5 +1,7 @@
 // app/login/page.js
 'use client';  // client-side React component
+
+import { useRouter } from "next/navigation";
 import {auth} from "../firebaseConfig/firebaseInit";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from 'react';
@@ -8,6 +10,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
+  const router = useRouter()
   
   
 
@@ -24,11 +27,17 @@ export default function LoginPage() {
     try{
       const login = await signInWithEmailAndPassword(auth,email,password);
       console.log("Logged IN YUHU");
+      await login.user?.reload();
+      if(auth.currentUser?.emailVerified){
+        console.log("Verified redirecting");
+        router.push("./homePage");
+      }else{
+        console.log("Email is not yet verified");
+        return;
+      }
     }catch(err){
       console.error(err);
     }
-    
-   
   }
 
   return (
