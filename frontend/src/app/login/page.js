@@ -10,7 +10,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
   
   
 
@@ -37,8 +37,9 @@ export default function LoginPage() {
       }
     }catch(err){
       console.error(err);
-    }
-  }
+    };
+  };
+  
 
   return (
     <div className='mainContainer'>
@@ -68,4 +69,4 @@ export default function LoginPage() {
         </form>
     </div>
   );
-}
+};
