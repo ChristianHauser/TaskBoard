@@ -30,6 +30,10 @@ export default function LoginPage() {
       await login.user?.reload();
       if(auth.currentUser?.emailVerified){
         console.log("Verified redirecting");
+        
+        console.log('User after login:', login.user);
+        const token = await login.user.getIdToken();
+        console.log('Token after login:', token);
         router.push("./homePage");
       }else{
         console.log("Email is not yet verified");
