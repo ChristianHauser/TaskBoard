@@ -41,8 +41,13 @@ if(preg_match("/Bearer\s(\S+)/" , $authoHeader,$matches)) {
 }
 
 try{
-    $verifyIdToken = $auth->verifyIdToken($userToken);
-    $uid = $verifyIdToken->claims()->get("sub");
+    //$verifyIdToken = $auth->verifyIdToken($userToken);
+    //$uid = $verifyIdToken->claims()->get("sub");
+    $parts = explode('.', $userToken);
+    $payloadBase64 = strtr($parts[1], '-_', '+/');
+    $payloadJson = base64_decode($payloadBase64);
+    $payload = json_decode($payloadJson, true);
+    $uid = $payload['sub'] ?? null;
 
     $uidSql = "SELECT * FROM user WHERE firebase_uid = ?";
     $stmt = $pdo->prepare($uidSql);

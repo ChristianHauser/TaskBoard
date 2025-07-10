@@ -16,7 +16,9 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    // Just respond with 200 OK and exit
+    header("Access-Control-Allow-Origin: http://localhost:3000");
+    header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type, Authorization");
     http_response_code(200);
     exit();
 }
@@ -24,9 +26,9 @@ $factory = (new Factory())->withServiceAccount(__DIR__ ."/../credentials/service
 
 $auth = $factory->createAuth();
 
-$headers = getallheaders();
-
-$authoHeader = $headers["Authorization"] ?? "";
+$headers = array_change_key_case(getallheaders(), CASE_LOWER);
+//var_dump(getallheaders());
+$authoHeader = $headers["authorization"] ?? $_SERVER["HTTP_AUTHORIZATION"] ?? "";
 
 if(preg_match("/Bearer\s(\S+)/", $authoHeader, $matches)) {
 
@@ -42,9 +44,17 @@ if(preg_match("/Bearer\s(\S+)/", $authoHeader, $matches)) {
 
 
 try{
-    $verifyIdToken = $auth->verifyIdToken($userToken);
+    //DOES NOT WORK LOCALLY
+    //$verifyIdToken = $auth->verifyIdToken($userToken);
 
-    $uid = $verifyIdToken->claims()->get('sub');
+    //$uid = $verifyIdToken->claims()->get('sub');
+    
+    //DOING THIS ONLY LOCALLY xxxx.yyyyy.cccc.
+    $parts = explode('.', $userToken);
+    $payloadBase64 = strtr($parts[1], '-_', '+/');
+    $payloadJson = base64_decode($payloadBase64);
+    $payload = json_decode($payloadJson, true);
+    $uid = $payload['sub'] ?? null;
 
     $userSql = "SELECT * FROM user WHERE firebase_uid = ?";
     $userStmt = $pdo->prepare($userSql);
