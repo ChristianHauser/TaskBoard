@@ -2,17 +2,18 @@
 import {auth,useAuth} from "../firebaseConfig/firebaseInit";
 
 import { onAuthStateChanged } from "firebase/auth";
-
+import{verifyToken,getproject} from "../api/getprojects.js";
 import { useEffect, useState } from "react";
-
+import ProjectList from "../Components/ProjectList";
 export default function homePage(){
+
 const [projects, setProjects] = useState ([]);
 //const  [user, setUser] = useState(null);
 const {user, loading} = useAuth();
 useEffect(() => {
     
     if(loading || !user) return;
-    async function awaitToken(){
+    async function init(){
         if(user){
             if (!auth.currentUser) {
                 console.error("No current user. Can't get token.");
@@ -20,44 +21,18 @@ useEffect(() => {
             }
 
             const tokenId = await auth.currentUser.getIdToken(true);
+            await verifyToken(tokenId);
             
-            const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/verification.php",{
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${tokenId}`,
-                },
-            });
-            if (!res.ok) {
-                const errorText = await res.text();
-                throw new Error(`Verification failed: ${res.status} - ${errorText}`);
-            }
-            const data = await res.json();
-            console.log("token is verified");
-            console.log(data);
-            
-            getProjects(tokenId);
-           
+            setProjects(await getproject(tokenId));
         }
-    }
-    awaitToken();
+    }   
+        init(); 
 }, [user,loading]);
 
 
 
-async function getProjects(tokenId){
-    
-    const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/getProjects.php", {
-        method: "POST",
-        headers: {"Content-Type": "application/json", Authorization: `Bearer ${tokenId}`},
-        
-    });
 
-    const dataOfProj = await res.json();
-    
-    setProjects(dataOfProj.projectData);
-    
-}
+
 useEffect (() => {
     
     
@@ -71,13 +46,12 @@ useEffect (() => {
 }, [projects]);
 
 
-
 return(
     <div>
     <h1>Welcome home {user ? user.email : "loading"}</h1><br></br>
     <div></div>
     <h2>Projects</h2>
-    <p>{projects && projects.length > 0 ? JSON.stringify(projects[1].project_name) : "No projects yet"}</p>
+    <ProjectList projects= {projects}></ProjectList>
     </div>
 )
 
