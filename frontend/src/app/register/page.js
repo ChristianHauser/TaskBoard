@@ -2,7 +2,7 @@
 import { sendError } from "next/dist/server/api-utils";
 import { useState } from "react";
 import {auth} from "../firebaseConfig/firebaseInit";
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 
 
 export default function RegisterPage(){
@@ -28,7 +28,7 @@ export default function RegisterPage(){
         try {
                 const userCredential = await createUserWithEmailAndPassword(auth, userRegistrationData.email, userRegistrationData.password);
                 console.log(userCredential.user.uid);
-
+                await(updateProfile(userCredential,{ displayName: userRegistrationData.user_name}));
                 await sendEmailVerification(userCredential.user);
 
                 // store other user data in your DB if needed, using userCredential.user.uid

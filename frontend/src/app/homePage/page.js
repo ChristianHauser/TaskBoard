@@ -4,7 +4,8 @@ import {auth,useAuth} from "../firebaseConfig/firebaseInit";
 import { onAuthStateChanged } from "firebase/auth";
 import{verifyToken,getproject} from "../api/getprojects.js";
 import { useEffect, useState } from "react";
-import ProjectList from "../Components/ProjectList";
+import ProjectList from "../Components/ProjectList/ProjectList";
+import Header from "../Components/Header/Header";
 export default function homePage(){
 
 const [projects, setProjects] = useState ([]);
@@ -30,10 +31,17 @@ useEffect(() => {
 }, [user,loading]);
 
 
+return(
+    <>
+    
+    <Header user={user}></Header>
+    
+    <ProjectList projects={projects} user= {user}></ProjectList>
+    </>
+)
 
 
-
-useEffect (() => {
+/* useEffect (() => {
     
     
     if(projects && projects.length>0){
@@ -45,15 +53,8 @@ useEffect (() => {
     
 }, [projects]);
 
+ */
 
-return(
-    <div>
-    <h1>Welcome home {user ? user.email : "loading"}</h1><br></br>
-    <div></div>
-    <h2>Projects</h2>
-    <ProjectList projects= {projects}></ProjectList>
-    </div>
-)
 
 
 

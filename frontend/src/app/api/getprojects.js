@@ -1,5 +1,4 @@
 
-"user client";
 export async function verifyToken(tokenId){
 
     const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/verification.php",{
