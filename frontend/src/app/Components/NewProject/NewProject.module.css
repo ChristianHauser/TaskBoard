@@ -1,5 +1,29 @@
 .newProject{
+    display: flex;
+    flex-direction: column;
     background-color: white;
-    width: 20px;
-    height: 20px;
+    align-items: center;
+    justify-content: center;
+    min-width: 15em;
+    min-height: 15em;
+    color: black;
+    border-radius: 1em 1em;
+    
+    font-weight: 500;
+    gap: 1em;
+    position: relative;
+    transition: transform 0.1s ease-in-out;
 }
+
+.newProject:hover{
+    
+    
+    transform: scale(1.02);
+    
+}
+
+.icon{
+    
+    bottom: 4em;
+}
+

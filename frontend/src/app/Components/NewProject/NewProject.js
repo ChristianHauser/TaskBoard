@@ -1,5 +1,8 @@
 import { useRouter } from "next/navigation";
 import {auth,useAuth} from "../../firebaseConfig/firebaseInit";
+import styles from "./NewProject.module.css";
+import { AiFillPlusSquare } from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
 export default function NewProject({user}){
     const router = useRouter();
 
@@ -25,8 +28,9 @@ export default function NewProject({user}){
         
     }
     return(
-        <div className="newProject" onClick={createNewProject}>
-            Hallo oi
+        <div className={styles.newProject} onClick={createNewProject}>
+            <p className={styles.text}>Add new Project</p>
+            <AiOutlinePlus size={28} className={styles.icon}/>
         </div>
     );
 }
