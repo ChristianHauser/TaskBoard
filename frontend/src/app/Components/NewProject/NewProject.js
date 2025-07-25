@@ -13,21 +13,23 @@ export default function NewProject({user}){
         console.log(user);
         if(!user) return;
         const tokenId = await auth.currentUser.getIdToken(true);
-        console.log(tokenId);
+        console.log(user);
         try{
+            
             await verifyToken(tokenId);
             const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/createNewProject.php", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: {user}           
+            body: JSON.stringify({user})        
             })
+            
                 if(!res.ok){
                     const errorText = await res.text();
                     throw new Error(`Creating Project Failed: ${res.status} - ${errorText}`);
                 }
                 router.push("/project");
-        }catch{
-            console.log(`Error no valid tokenId found `);
+        }catch(err){
+            console.log(err);
         }
         
         

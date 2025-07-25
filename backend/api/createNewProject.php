@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 $data = json_decode(file_get_contents("php://input"));
 
 if($data){
+    
     $pdo->beginTransaction();
     try{
         $userFb = $data->user ?? "";
@@ -20,16 +21,16 @@ if($data){
         $userSql = "SELECT id FROM user WHERE firebase_uid = ?";
         $userStmt = $pdo->prepare($userSql);
         $userStmt->execute([$userFb->uid]);
-        $user = $stmt->fetch();
+        $user = $userStmt->fetch();
 
         if(!$user){
-            
+            error_log("User fetch returned nothing for UID: " . $userFb->uid);
             echo json_encode(["error"=> "User not found in database"]);
             exit;
         }
         $userId = $user->id;
         //Insert a new Project with default Title
-        $projectSql = "INSERT INTO project (project_name) VALUES (?)";
+        $projectSql = "INSERT INTO projects (project_name) VALUES (?)";
         $projectStmt = $pdo->prepare($projectSql);
         $projectStmt->execute(["Unbenanntes Projekt"]);
         $projectID = $pdo->lastInsertId();
@@ -39,9 +40,11 @@ if($data){
         $uopStmt = $pdo->prepare($uopSql);
         $uopStmt->execute(["owner", $userId, $projectID]);
         $pdo->commit();
+
         echo json_encode(["message"=>"project successfully added to db"]);
     }catch(Exception $e){
         $pdo->rollBack();
+        error_log("Transaction failed: " . $e->getMessage());
         echo json_encode(["error"=> $e->getMessage()]);
         exit;
     }
