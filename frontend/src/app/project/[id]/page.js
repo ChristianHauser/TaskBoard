@@ -1,13 +1,14 @@
 "use client";
 
-import {auth,useAuth} from "../firebaseConfig/firebaseInit.js";
-import {verifyToken} from "../api/getprojects.js";
+import {auth,useAuth} from "../../firebaseConfig/firebaseInit.js";
+import {verifyToken} from "../../api/getprojects.js";
 import {useState, useEffect} from "react";
-import Header from "../Components/Header/Header.js";
+import Header from "../../Components/Header/Header.js";
+import {useParams} from "next/navigation";
 
 export default function project(){
 
-    
+    const urlInfo = useParams();
     const {user,loading} = useAuth();
     const [displayName, setDisplayName] = useState();
     
@@ -31,7 +32,7 @@ export default function project(){
     
     return(
         <div>
-            <p>{displayName}</p>
+            <p>{displayName}{urlInfo.id}</p>
         </div>
     )
 }

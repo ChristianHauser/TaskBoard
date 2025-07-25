@@ -1,9 +1,14 @@
 import NewProject from "../NewProject/NewProject";
 import style from "./ProjectList.module.css";
+import { useRouter } from "next/navigation";
 export default function ProjectList({projects,user}){
     if(projects && projects.length>0){
+        const router = useRouter();
         
-        console.log(projects.map(p => p.project_id));
+        const routeToProj = ((projId) => {
+                router.push(`/project/${projId}`);
+        });
+        
         return(
             
                 
@@ -14,7 +19,7 @@ export default function ProjectList({projects,user}){
                         <div className={style.projectsRow}>
                         <NewProject user={user} />
                         {projects.map((project) => 
-                            <div key={project.project_id} className={style.projectCard}>
+                            <div key={project.project_id} className={style.projectCard} onClick={() => routeToProj(project.project_id)}>
                                 <p className={style.projectName}>{project.project_name} </p>
                                 <div className={style.roleAndTime}>
                                     <p className={style.updatedAt}>{project.updated_at}</p>

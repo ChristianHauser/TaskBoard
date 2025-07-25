@@ -41,7 +41,7 @@ if($data){
         $uopStmt->execute(["owner", $userId, $projectID]);
         $pdo->commit();
 
-        echo json_encode(["message"=>"project successfully added to db"]);
+        echo json_encode(["message"=>"project successfully added to db","project_id" => $projectID]);
     }catch(Exception $e){
         $pdo->rollBack();
         error_log("Transaction failed: " . $e->getMessage());

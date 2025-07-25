@@ -10,7 +10,7 @@ export default function NewProject({user}){
 
     
     const createNewProject =  async function (){
-        console.log(user);
+        
         if(!user) return;
         const tokenId = await auth.currentUser.getIdToken(true);
         console.log(user);
@@ -27,7 +27,9 @@ export default function NewProject({user}){
                     const errorText = await res.text();
                     throw new Error(`Creating Project Failed: ${res.status} - ${errorText}`);
                 }
-                router.push("/project");
+                const data = await res.json();
+                const projId = data.project_id;
+                router.push(`/project/${projId}`);
         }catch(err){
             console.log(err);
         }
