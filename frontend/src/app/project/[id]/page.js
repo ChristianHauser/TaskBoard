@@ -5,6 +5,7 @@ import {verifyToken} from "../../api/getprojects.js";
 import {useState, useEffect} from "react";
 import Header from "../../Components/Header/Header.js";
 import {useParams} from "next/navigation";
+import slugify from "slugify";
 
 export default function project(){
 
