@@ -18,11 +18,12 @@ export async function verifyToken(tokenId){
 
 } 
 
-export async function getproject(tokenId){
+export async function getproject(uid){
 
-    const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/getProjects.php", {
+    const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/index.php?q=get-all-projects-of-user", {
         method: "POST",
-        headers: {"Content-Type": "application/json", Authorization: `Bearer ${tokenId}`},
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({uid})
         
     });
 

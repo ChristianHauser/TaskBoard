@@ -6,6 +6,7 @@ import {useState, useEffect} from "react";
 import Header from "../../Components/Header/Header.js";
 import {useParams} from "next/navigation";
 import slugify from "slugify";
+import Column from "../Components/Column/Column.js";
 
 export default function project(){
 
@@ -31,9 +32,16 @@ export default function project(){
     
     //<Header user={user}></Header>
     
+    const parts = urlInfo.id.split("-");
+    const name = parts.slice(0,-1).join(" ");
+    const projectId = parts[parts.length-1];
+    console.log(projectId);
+    
     return(
         <div>
-            <p>{displayName}{urlInfo.id}</p>
+            <Header user={user}></Header>
+            <p>{displayName} {name} {projectId}</p>
+            <Column projectId={projectId}></Column>
         </div>
     )
 }

@@ -26,7 +26,7 @@ useEffect(() => {
             const tokenId = await auth.currentUser.getIdToken(true);
             await verifyToken(tokenId);
             
-            setProjects(await getproject(tokenId));
+            setProjects(await getproject(user.uid));
         }
     }   
         init(); 
