@@ -3,6 +3,7 @@ import { sendError } from "next/dist/server/api-utils";
 import { useState } from "react";
 import {auth} from "../firebaseConfig/firebaseInit";
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
+import { useRouter } from 'next/navigation';
 
 
 export default function RegisterPage(){
@@ -10,7 +11,7 @@ export default function RegisterPage(){
     const [showPass, setShowPass] = useState(false);
     const [showRedoPass, setShowRedoPass] = useState(false);
 
-    
+    const router = useRouter();
 
     const [userRegistrationData, setUserRegistrationData] = useState({
             user_name: "",
@@ -28,7 +29,7 @@ export default function RegisterPage(){
         try {
                 const userCredential = await createUserWithEmailAndPassword(auth, userRegistrationData.email, userRegistrationData.password);
                 console.log(userCredential.user.uid);
-                await(updateProfile(userCredential,{ displayName: userRegistrationData.user_name}));
+                await(updateProfile(userCredential.user,{ displayName: userRegistrationData.user_name}));
                 await sendEmailVerification(userCredential.user);
 
                 // store other user data in your DB if needed, using userCredential.user.uid
@@ -41,6 +42,9 @@ export default function RegisterPage(){
                 });
                 const data = await res.json();
                 console.log(data);
+                if(res.ok){
+                    router.push("/login");
+                }
             } catch (err) {
                 console.error(err);
             }

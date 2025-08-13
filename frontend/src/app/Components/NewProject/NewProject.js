@@ -14,21 +14,26 @@ export default function NewProject({user}){
         if(!user) return;
         const tokenId = await auth.currentUser.getIdToken(true);
         console.log(user);
+        
         try{
             
             await verifyToken(tokenId);
-            const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/createNewProject.php", {
+            const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/index.php?q=create-new-project", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({user})        
             })
             
                 if(!res.ok){
+                    
                     const errorText = await res.text();
                     throw new Error(`Creating Project Failed: ${res.status} - ${errorText}`);
                 }
+                
                 const data = await res.json();
+                
                 const projId = data.project_id;
+                
                 router.push(`/project/${projId}`);
         }catch(err){
             console.log(err);

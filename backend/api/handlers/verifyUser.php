@@ -1,28 +1,28 @@
 <?php
 
-require_once __DIR__ ."/../vendor/autoload.php";
-require_once __DIR__ ."/../db/config.php";
+require_once __DIR__ ."/../../vendor/autoload.php";
+require_once __DIR__ ."/../../api/init.php";
+require_once __DIR__ ."/../queries/userQueries.php";
+
 
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Auth;
 use Kreait\Firebase\Exception\AuthException;
 use Firebase\Auth\Token\Exception\UnknownKey;
 
-header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 
 
+//not sure if i need this
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     header("Access-Control-Allow-Origin: http://localhost:3000");
     header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
     header("Access-Control-Allow-Headers: Content-Type, Authorization");
     http_response_code(200);
     exit();
-}
-$factory = (new Factory())->withServiceAccount(__DIR__ ."/../credentials/serviceAccount.json");
+} 
+
+$factory = (new Factory())->withServiceAccount(__DIR__ ."/../../credentials/serviceAccount.json");
 
 $auth = $factory->createAuth();
 
@@ -56,10 +56,8 @@ try{
     $payload = json_decode($payloadJson, true);
     $uid = $payload['sub'] ?? null;
 
-    $userSql = "SELECT * FROM user WHERE firebase_uid = ?";
-    $userStmt = $pdo->prepare($userSql);
-    $userStmt->execute([$uid]);
-    $user = $userStmt->fetch();
+    
+    $user = getUserByFireBaseUid($pdo,$uid);
 
     if(!$user){
         http_response_code(404);

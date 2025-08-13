@@ -17,3 +17,9 @@ function getAllProjectsOfUser($pdo, $userId){
     return $projectStmt->fetchAll(PDO::FETCH_OBJ);
 }
 
+function insertNewProjectNameAndReturnId($pdo, $projName){
+    $projectSql = "INSERT INTO projects (project_name) VALUES (?)";
+    $projectStmt = $pdo->prepare($projectSql);
+    $projectStmt->execute([$projName]);
+    return $pdo->lastInsertId();
+}

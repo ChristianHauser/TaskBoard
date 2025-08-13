@@ -1,7 +1,7 @@
 
 export async function verifyToken(tokenId){
 
-    const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/verification.php",{
+    const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/index.php?q=verify-user-with-firebase",{
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
