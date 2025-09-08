@@ -1,9 +1,9 @@
-export async function getTasks(taskId){
+export async function getTasks(columnId){
 
-    const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/getTasks.php",{
+    const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/index.php?q=get-tasks-of-column",{
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({taskId}),
+        body: JSON.stringify({columnId}),
     });
     return await res.json();
 }

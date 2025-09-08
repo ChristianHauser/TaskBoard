@@ -21,6 +21,9 @@ switch($path){
     case "register-new-user":
         require_once __DIR__ ."/handlers/registerNewUser.php";
         break;
+    case "get-tasks-of-column":
+        require_once __DIR__ ."/handlers/getTaskOfColumns.php";
+        break;
     default:
         http_response_code(404);
         echo json_encode(['error' => 'Endpoint not found']);

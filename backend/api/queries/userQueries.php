@@ -7,3 +7,9 @@ function getUserByFireBaseUid($pdo,$uid){
     $stmt->execute([$uid]);
     return $stmt->fetch();
 }
+
+function insertANewUser($pdo,$userName, $firebaseUid ){
+    $sql = "INSERT INTO user (user_name,firebase_uid) VALUES (?,?)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$userName, $firebaseUid]);
+}

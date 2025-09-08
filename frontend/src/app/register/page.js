@@ -35,7 +35,7 @@ export default function RegisterPage(){
                 // store other user data in your DB if needed, using userCredential.user.uid
                 //Store firebase uid in db
                 
-                const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/register.php",{
+                const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/index.php?q=register-new-user",{
                     method: "POST",
                     headers: {"Content-Type" : "application/json"},
                     body: JSON.stringify({"userName": userRegistrationData.user_name, "firebase_uid": userCredential.user.uid }),
