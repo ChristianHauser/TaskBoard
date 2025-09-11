@@ -7,7 +7,7 @@ import Header from "../../Components/Header/Header.js";
 import {useParams} from "next/navigation";
 import slugify from "slugify";
 import Column from "../Components/Column/Column.js";
-
+import AddNewTask from "../Components/AddNewTask/AddNewTask.js";
 export default function project(){
 
     const urlInfo = useParams();
@@ -42,6 +42,7 @@ export default function project(){
             <Header user={user}></Header>
             <p>{displayName} {name} {projectId}</p>
             <Column projectId={projectId}></Column>
+            
         </div>
     )
 }

@@ -6,7 +6,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 $columnId = $data->columnId ?? "";
 
-if($columnId){
+if(isset($columnId) && $columnId !== ""){
 
     //$taskArrayOfColumnId = getTasksOfColumnId($pdo,$columnId);
     //echo json_encode(["taskArrayOfColumnId" => $taskArrayOfColumnId]);

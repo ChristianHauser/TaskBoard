@@ -1,0 +1,24 @@
+.singleColumn{
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
+    grid-template-rows: 1fr 4fr;
+    background-color: red;
+        
+
+}
+
+.allColumns{
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px; /* space between columns */
+    background-color: blue;
+    padding: 10px;
+    min-height: 300px
+    
+}
+
+.colTitle{
+    display: grid;
+    place-items: center;
+}

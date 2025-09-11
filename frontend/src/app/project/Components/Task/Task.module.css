@@ -1,0 +1,26 @@
+.singleTask{
+    position: relative;
+    display: grid;
+    background-color: black;
+    place-items: center;
+    padding: 2em;
+    width: 50%;
+    border-radius: 1em 1em;
+}
+
+.createdAt{
+    font-size: small;
+    position:absolute;
+    bottom: 0;
+    right: 0;
+    padding-right: 1em;
+    
+}
+
+.assignedUser{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: small;
+    padding-left: 1em;
+}

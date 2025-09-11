@@ -4,6 +4,7 @@ export async function getTasks(columnId){
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({columnId}),
+        
     });
     return await res.json();
 }

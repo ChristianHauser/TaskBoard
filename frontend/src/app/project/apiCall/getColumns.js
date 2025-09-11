@@ -3,6 +3,7 @@ export async function getColumns(projectId){
         method: "POST",
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify({projectId}),
+        
 
     });
     return await res.json();
