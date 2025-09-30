@@ -1,20 +1,27 @@
 import style from "./AddNewTask.module.css";
 import {createANewTask} from "../../apiCall/createATask.js";
+import {getTasks} from "../../apiCall/getTasksApi"
 
+export default function AddNewTask({column, projectId, tasksByColumn, setTaskByColumn}){
 
-export default function AddNewTask({column, projectId,onTaskAdded}){
-
-    const handleSubmit = (e)=>{
+    const handleSubmit = async (e)=>{
         e.preventDefault();
         const formData = new FormData(e.target);
-        createANewTask(formData.get("headline"),formData.get("content"),formData.get("column"),projectId);
+        await createANewTask(formData.get("headline"),formData.get("content"),formData.get("column"),projectId);
+        await getData(formData.get("column"));
         
     }
+    async function getData(columnId) {
 
-    if (typeof onTaskAdded === "function") {
-    onTaskAdded(); 
+        const newArray = await getTasks(columnId);
+         setTaskByColumn(prev => ({
+    ...prev,                // keep old columns
+    [columnId]: Array.isArray(newArray) 
+      ? newArray 
+      : newArray.tasks || [] // normalize to an array
+  }));
     }
-    
+
 
     return(
 

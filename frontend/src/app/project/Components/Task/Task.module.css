@@ -4,8 +4,10 @@
     background-color: black;
     place-items: center;
     padding: 2em;
-    width: 50%;
+    
+    
     border-radius: 1em 1em;
+    min-height: 5em;
 }
 
 .createdAt{
@@ -23,4 +25,53 @@
     left: 0;
     font-size: small;
     padding-left: 1em;
+}
+
+.taskContainer{
+
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    overflow: hidden;
+    gap: 0.5em;
+    grid-auto-rows: 5em;
+    height: 80dvh;  
+    overflow: hidden;
+}
+    
+.addTask{
+    color: black;
+    background-color: white;
+    opacity: 50%;
+    padding: 2em;
+    border-radius: 1em 1em;
+    
+    
+    
+}
+
+
+.ghost{
+    background-color: white;
+    
+    opacity: 50%;
+    padding: 2em;
+    padding-bottom: 3em;
+    border-radius: 1em 1em 0em 0em;
+    min-height: 5.5em;
+    
+    
+}
+
+.taskContainer > :last-child{
+    
+    grid-column: 1 / -1;
+    grid-row: span 2; 
+
+    min-height: 100%;
+    
+    border-top-right-radius: var(--topRight, 1em);
+    place-content: center;
+    text-align: center;
+    
+    
 }

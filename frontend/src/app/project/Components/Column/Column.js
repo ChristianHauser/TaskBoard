@@ -53,7 +53,7 @@ export default function Column({ projectId }) {
         </div>
       ))}
     </div>
-    <AddNewTask projectId={projectId} column={columns} ></AddNewTask>
+    <AddNewTask projectId={projectId} column={columns} tasksArray={tasksByColumn} setTaskByColumn={setTasksByColumn}></AddNewTask>
     </>
   );
 }

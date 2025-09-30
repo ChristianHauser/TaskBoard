@@ -1,9 +1,11 @@
 .singleColumn{
     display: grid;
-    grid-template-columns: repeat(1,1fr);
-    grid-template-rows: 1fr 4fr;
+    
+    grid-template-rows: 1fr 8fr;
     background-color: red;
-        
+    
+    min-height: 50em;  
+    
 
 }
 
@@ -12,9 +14,9 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 16px; /* space between columns */
-    background-color: blue;
+    background-color: orange;
     padding: 10px;
-    min-height: 300px
+    min-height: 300px;
     
 }
 
