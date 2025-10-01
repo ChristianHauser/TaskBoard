@@ -1,0 +1,18 @@
+
+.addTaskContainer {
+  background: #888888;
+  border-radius: 12px;
+  padding: 1rem;
+  max-width: 600px;
+  width: min(90vw, 600px);
+}
+
+
+.overlay{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;            /* above everything */
+  background: rgba(0, 0, 0, 0.5);
+  display: grid;
+  place-items: center;
+}

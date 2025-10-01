@@ -2,14 +2,15 @@ import {useState} from "react";
 import style from "./Task.module.css";
 import formatDate from "../FormatDate/formatDate.js";
 import {useRef, useEffect} from "react";
-export default function Task({taskArray}){
+export default function Task({taskArray, colId, setShowingPopup,setCurrentColumn}){
     const containerRef = useRef(null);
     const lastRef = useRef(null);
-    
+    console.log(taskArray);
     const isOdd = taskArray?.length % 2 ===1;
     if(isOdd && lastRef){
         lastRef.current.style.setProperty("--topRight", "0");
     }
+
     useEffect(() => {
     if(!containerRef || !lastRef) return;
     const grid = containerRef.current;
@@ -27,11 +28,11 @@ export default function Task({taskArray}){
     const taskCount = taskArray.length;
     const rowsUsed  = Math.ceil((taskCount + (taskCount % 2)) / 2);
 
-    // 👇 round UP so we cover any leftover pixels
+
     const totalRows = Math.ceil((grid.clientHeight + gap) / (row + gap));
     const span = Math.max(1, totalRows - rowsUsed);
 
-    // start on the next free row and span to the bottom
+    
     last.style.gridRow = `${rowsUsed + 1} / span ${span}`;
   };
 
@@ -40,6 +41,9 @@ export default function Task({taskArray}){
   measure();
   return () => ro.disconnect();
 }, [taskArray.length]);
+
+
+
     
     if(taskArray){
         return(
@@ -56,9 +60,16 @@ export default function Task({taskArray}){
                 );
                 
             })}
-            {isOdd && <div  className={style.ghost}></div>}
-            <div ref={lastRef} className={style.addTask}>+</div>
-           
+            
+            {isOdd && <div  className={`${style.ghost} ${style.addTask}`}></div>}
+            <div onClick={(e)=>{
+                e.preventDefault();
+                setShowingPopup(true);
+                setCurrentColumn(colId);
+                }} 
+                ref={lastRef} className={style.addTask}>+
+            </div>
+            
         </div>
         
         

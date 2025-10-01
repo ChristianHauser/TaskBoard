@@ -1,8 +1,14 @@
 import style from "./AddNewTask.module.css";
 import {createANewTask} from "../../apiCall/createATask.js";
 import {getTasks} from "../../apiCall/getTasksApi"
+import {createPortal} from "react-dom";
+import {useState, useEffect} from "react";
+export default function AddNewTask({column, projectId, tasksByColumn, setTaskByColumn, showingPopup, setShowingPopup, currentColumn}){
 
-export default function AddNewTask({column, projectId, tasksByColumn, setTaskByColumn}){
+    
+    //const [mounted, setMounted] = useState(false);
+
+    //useEffect(() => setMounted(true), []);
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
@@ -14,25 +20,29 @@ export default function AddNewTask({column, projectId, tasksByColumn, setTaskByC
     async function getData(columnId) {
 
         const newArray = await getTasks(columnId);
-         setTaskByColumn(prev => ({
-    ...prev,                // keep old columns
-    [columnId]: Array.isArray(newArray) 
-      ? newArray 
-      : newArray.tasks || [] // normalize to an array
-  }));
+        setTaskByColumn(prev => ({
+                ...prev,                
+                [columnId]: Array.isArray(newArray) 
+                ? newArray 
+                : newArray.tasks || []
+        }));
     }
 
 
     return(
-
-        <div className={style.AddTaskContainer}>
+        <>
+        
+        {showingPopup && createPortal(
+            
+            <div className={style.overlay}>
+            <div className={style.addTaskContainer}>
             <form onSubmit={handleSubmit}>
-                <label>Titel:</label>
+                <label>Aufgabentitel:</label>
                 <input name="headline"></input>
-                <label>Inhalt:</label>
+                <label>Beschreibung:</label>
                 <input name="content"></input>
                 <label>Column:</label>
-                <select name="column">
+                <select name="column" defaultValue={currentColumn}>
                     {
                         column.map(element => {
                             return(
@@ -46,9 +56,15 @@ export default function AddNewTask({column, projectId, tasksByColumn, setTaskByC
                     
                 </select>
                 <button type="submit">Submit</button>
-
+                <button type="button" onClick={() =>setShowingPopup(false)}>
+                    Cancel
+                </button>   
             </form>
 
-        </div>
+            </div>
+        </div>, document.body
+        )}
+        
+        </>
     )
 }

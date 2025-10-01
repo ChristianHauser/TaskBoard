@@ -41,7 +41,7 @@
 .addTask{
     color: black;
     background-color: white;
-    opacity: 50%;
+    opacity: 0.5;
     padding: 2em;
     border-radius: 1em 1em;
     
@@ -53,13 +53,12 @@
 .ghost{
     background-color: white;
     
-    opacity: 50%;
+    opacity: 0.5;
     padding: 2em;
     padding-bottom: 3em;
     border-radius: 1em 1em 0em 0em;
     min-height: 5.5em;
-    
-    
+      
 }
 
 .taskContainer > :last-child{
@@ -75,3 +74,13 @@
     
     
 }
+
+
+/* hover both tiles when wrapper is hovered */
+.taskContainer:hover .addTask,
+.taskContainer:hover .ghost {
+  background-color: rgb(200, 200, 200);
+  
+}
+
+

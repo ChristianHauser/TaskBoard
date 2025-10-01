@@ -8,7 +8,8 @@ import AddNewTask from "../../Components/AddNewTask/AddNewTask.js";
 export default function Column({ projectId }) {
   const [columns, setColumns] = useState([]);
   const [tasksByColumn, setTasksByColumn] = useState({}); // <-- Mapping nach column_id
-
+  const [showingPopup, setShowingPopup] = useState(false);
+  const [currentColumn, setCurrentColumn] = useState();
   useEffect(() => {
     let isMounted = true;
     getData(isMounted);
@@ -27,12 +28,11 @@ export default function Column({ projectId }) {
       setColumns(columnsArray);
 
       if (columnsArray.length) {
-        // Alle Tasks für jede Spalte abrufen
         const tasksArr = await Promise.all(
           columnsArray.map(col => getTasks(col.id))
         );
         console.log(tasksArr);
-        // Mapping erstellen: column_id → Array von Tasks
+        
         const newTasksByColumn = {};
         columnsArray.forEach((col, idx) => {
           newTasksByColumn[col.id] = tasksArr[idx] || [];
@@ -45,15 +45,17 @@ export default function Column({ projectId }) {
   return (
     <>
     <div className={style.allColumns}>
-      {columns.map(col => (
+      
+      {columns.map(col => 
         <div className={style.singleColumn} key={col.id}>
           <div className={style.colTitle}>{col.name}</div>
-          <Task taskArray={tasksByColumn[col.id] || []} />
+          <Task colId={col.id} setShowingPopup={setShowingPopup} setCurrentColumn={setCurrentColumn} taskArray={tasksByColumn[col.id] || []} />
           
         </div>
-      ))}
+      )}
+      <AddNewTask projectId={projectId} column={columns} tasksArray={tasksByColumn} setTaskByColumn={setTasksByColumn} showingPopup={showingPopup} setShowingPopup={setShowingPopup} currentColumn={currentColumn}></AddNewTask>
     </div>
-    <AddNewTask projectId={projectId} column={columns} tasksArray={tasksByColumn} setTaskByColumn={setTasksByColumn}></AddNewTask>
+    
     </>
   );
 }
