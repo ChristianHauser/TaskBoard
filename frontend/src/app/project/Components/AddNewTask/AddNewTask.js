@@ -1,8 +1,9 @@
 import style from "./AddNewTask.module.css";
-import {createANewTask} from "../../apiCall/createATask.js";
-import {getTasks} from "../../apiCall/getTasksApi"
+import {createANewTask} from "../../apiCall/taskBoardApiCalls";
+import {getTasks} from "../../apiCall/taskBoardApiCalls"
 import {createPortal} from "react-dom";
 import {useState, useEffect} from "react";
+import Overlay from "../Overlay/Overlay";
 export default function AddNewTask({column, projectId, tasksByColumn, setTaskByColumn, showingPopup, setShowingPopup, currentColumn}){
 
     
@@ -32,8 +33,9 @@ export default function AddNewTask({column, projectId, tasksByColumn, setTaskByC
     return(
         <>
         
-        {showingPopup && createPortal(
+        {showingPopup && (
             
+            <Overlay>
             <div className={style.overlay}>
             <div className={style.addTaskContainer}>
             <form onSubmit={handleSubmit}>
@@ -53,6 +55,7 @@ export default function AddNewTask({column, projectId, tasksByColumn, setTaskByC
                         })
                     }
                     
+
                     
                 </select>
                 <button type="submit">Submit</button>
@@ -62,7 +65,8 @@ export default function AddNewTask({column, projectId, tasksByColumn, setTaskByC
             </form>
 
             </div>
-        </div>, document.body
+        </div>
+        </Overlay>
         )}
         
         </>

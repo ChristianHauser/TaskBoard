@@ -1,5 +1,5 @@
-import { getColumns } from "../../apiCall/getColumns.js";
-import { getTasks } from "../../apiCall/getTasksApi.js";
+import { getColumns } from "../../apiCall/taskBoardApiCalls.js";
+import { getTasks } from "../../apiCall/taskBoardApiCalls.js";
 import { useState, useEffect } from "react";
 import Task from "../Task/Task.js";
 import style from "./Column.module.css";
@@ -53,9 +53,9 @@ export default function Column({ projectId }) {
           
         </div>
       )}
-      <AddNewTask projectId={projectId} column={columns} tasksArray={tasksByColumn} setTaskByColumn={setTasksByColumn} showingPopup={showingPopup} setShowingPopup={setShowingPopup} currentColumn={currentColumn}></AddNewTask>
+      
     </div>
-    
+    <AddNewTask projectId={projectId} column={columns} tasksArray={tasksByColumn} setTaskByColumn={setTasksByColumn} showingPopup={showingPopup} setShowingPopup={setShowingPopup} currentColumn={currentColumn}></AddNewTask>
     </>
   );
 }

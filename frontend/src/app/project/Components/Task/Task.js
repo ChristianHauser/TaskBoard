@@ -5,6 +5,7 @@ import {useRef, useEffect} from "react";
 export default function Task({taskArray, colId, setShowingPopup,setCurrentColumn}){
     const containerRef = useRef(null);
     const lastRef = useRef(null);
+    const[extraHover, setExtraHover] = useState(false);
     console.log(taskArray);
     const isOdd = taskArray?.length % 2 ===1;
     if(isOdd && lastRef){
@@ -48,9 +49,10 @@ export default function Task({taskArray, colId, setShowingPopup,setCurrentColumn
     if(taskArray){
         return(
         
-        <div ref={containerRef} className={style.taskContainer}>
+        <div ref={containerRef} className={`${style.taskContainer} ${extraHover ? style.extraHover : ""}`}>
             {taskArray.map(task=> {
                 return(
+                    //Einzellnen Tasks
                     <div className={style.singleTask}key={task.id}>
                         {task.head_line}<br></br>
                         <span className={style.createdAt}>{formatDate(task.created_at)}</span>
@@ -61,8 +63,13 @@ export default function Task({taskArray, colId, setShowingPopup,setCurrentColumn
                 
             })}
             
-            {isOdd && <div  className={`${style.ghost} ${style.addTask}`}></div>}
-            <div onClick={(e)=>{
+            {isOdd && <div onMouseLeave={()=> setExtraHover(false)} onMouseEnter={()=> setExtraHover(true)}onClick={(e)=>{
+                e.preventDefault();
+                setShowingPopup(true);
+                setCurrentColumn(colId);
+                }}  className={`${style.ghost} ${style.addTask}`}></div>}
+
+            <div onMouseLeave={()=> setExtraHover(false)} onMouseEnter={()=> setExtraHover(true)} onClick={(e)=>{
                 e.preventDefault();
                 setShowingPopup(true);
                 setCurrentColumn(colId);

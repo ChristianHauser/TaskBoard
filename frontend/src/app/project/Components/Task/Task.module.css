@@ -76,11 +76,11 @@
 }
 
 
-/* hover both tiles when wrapper is hovered */
-.taskContainer:hover .addTask,
-.taskContainer:hover .ghost {
+.taskContainer.extraHover .addTask{
   background-color: rgb(200, 200, 200);
   
 }
-
-
+.taskContainer.extraHover .ghost{
+  background-color: rgb(200, 200, 200);
+  
+}
