@@ -20,4 +20,5 @@
     //Pdo instanz
     $pdo = new PDO(dsn: $dsn,username: $user, password: $passwordEnv);
     $pdo -> setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 

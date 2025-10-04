@@ -1,13 +1,28 @@
 .singleTask{
     position: relative;
     display: grid;
-    background-color: black;
+    background-color: rgb(255, 255, 255);
     place-items: center;
     padding: 2em;
-    
-    
+    color: black;
+    border: 2px black solid;
     border-radius: 1em 1em;
     min-height: 5em;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+}
+
+.headLine { 
+    
+    font-weight: 600;
+
+}
+
+
+.singleTask:hover{
+    
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px black;
 }
 
 .createdAt{
@@ -28,7 +43,7 @@
 }
 
 .taskContainer{
-
+    padding: 1em;
     display: grid;
     grid-template-columns: repeat(2,1fr);
     overflow: hidden;
@@ -36,6 +51,7 @@
     grid-auto-rows: 5em;
     height: 80dvh;  
     overflow: hidden;
+    
 }
     
 .addTask{
@@ -44,8 +60,6 @@
     opacity: 0.5;
     padding: 2em;
     border-radius: 1em 1em;
-    
-    
     
 }
 
@@ -78,6 +92,7 @@
 
 .taskContainer.extraHover .addTask{
   background-color: rgb(200, 200, 200);
+
   
 }
 .taskContainer.extraHover .ghost{

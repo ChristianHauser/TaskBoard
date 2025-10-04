@@ -1,0 +1,24 @@
+.projName{
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    color: white;
+    padding-right: 10px;
+    padding-left: 4px;
+    margin: 20px;
+    border-radius: 5px;
+    text-align:start
+}
+
+.projName:hover{
+    box-shadow: 0 0 0 1px white;
+    
+}
+.input:focus{
+    
+    background: transparent;
+              
+    color: inherit;
+  
+
+}

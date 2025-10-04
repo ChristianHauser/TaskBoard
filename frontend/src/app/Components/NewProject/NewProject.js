@@ -4,7 +4,7 @@ import styles from "./NewProject.module.css";
 import { AiFillPlusSquare } from "react-icons/ai";
 import { AiOutlinePlus } from "react-icons/ai";
 
-import{verifyToken} from "../../api/getprojects.js";
+import{verifyToken} from "../../api/homePageApiCalls.js";
 export default function NewProject({user}){
     const router = useRouter();
 

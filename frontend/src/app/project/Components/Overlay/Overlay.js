@@ -1,7 +1,7 @@
 import style from "../Overlay/Overlay.module.css";
 import {createPortal} from "react-dom";
 import {useState,useEffect} from "react";
-export default function Overlay({children}){
+export default function Overlay({open, onClose, children}){
 
     const [mounted, setMounted] = useState(false);
 
@@ -9,12 +9,14 @@ export default function Overlay({children}){
         setMounted(true);
     },[]);
 
-    if(!mounted) return null;
+    if(!mounted || !open) return null;
     return createPortal(
-        <div className={style.overLay}>
-            <div className={style.overLayContainer}>
+        <div onClick={(e) => e.currentTarget === e.target && onClose?.()} className={style.overLay} role="dialog" aria-modal="true">
+            <div  className={style.overLayContentContainer}>
                 {children}
+                <button className={style.closeButton} onClick={() => onClose?.()}>Close</button>
             </div>
+            
         </div>, document.body
     );
 }

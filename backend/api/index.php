@@ -28,6 +28,14 @@ switch($path){
     case "create-new-task":
         require_once __DIR__ ."/handlers/createANewTask.php";
         break;
+
+    case "get-project-name":
+        require_once __DIR__ ."/handlers/getProjectName.php";
+        break;
+    
+    case "set-project-name":
+        require_once __DIR__ ."/handlers/setProjectName.php";
+        break;
     default:
         http_response_code(404);
         echo json_encode(['error' => 'Endpoint not found']);

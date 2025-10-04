@@ -33,11 +33,10 @@ export default function AddNewTask({column, projectId, tasksByColumn, setTaskByC
     return(
         <>
         
-        {showingPopup && (
+        
             
-            <Overlay>
-            <div className={style.overlay}>
-            <div className={style.addTaskContainer}>
+            <Overlay open={showingPopup} onClose={()=> setShowingPopup(false)} >
+            
             <form onSubmit={handleSubmit}>
                 <label>Aufgabentitel:</label>
                 <input name="headline"></input>
@@ -59,15 +58,12 @@ export default function AddNewTask({column, projectId, tasksByColumn, setTaskByC
                     
                 </select>
                 <button type="submit">Submit</button>
-                <button type="button" onClick={() =>setShowingPopup(false)}>
-                    Cancel
-                </button>   
+                
             </form>
 
-            </div>
-        </div>
+            
         </Overlay>
-        )}
+        
         
         </>
     )

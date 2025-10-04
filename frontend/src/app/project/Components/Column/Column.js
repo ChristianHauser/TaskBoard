@@ -10,6 +10,7 @@ export default function Column({ projectId }) {
   const [tasksByColumn, setTasksByColumn] = useState({}); // <-- Mapping nach column_id
   const [showingPopup, setShowingPopup] = useState(false);
   const [currentColumn, setCurrentColumn] = useState();
+  const [showTaskPopup,setShowTaskPopup] = useState(false);
   useEffect(() => {
     let isMounted = true;
     getData(isMounted);
@@ -48,14 +49,14 @@ export default function Column({ projectId }) {
       
       {columns.map(col => 
         <div className={style.singleColumn} key={col.id}>
-          <div className={style.colTitle}>{col.name}</div>
-          <Task colId={col.id} setShowingPopup={setShowingPopup} setCurrentColumn={setCurrentColumn} taskArray={tasksByColumn[col.id] || []} />
+          <div  className={style.colTitle}>{col.name}</div>
+          <Task showTaskPopup={showTaskPopup} setShowTaskPopup={setShowTaskPopup} colId={col.id} setShowingPopup={setShowingPopup} setCurrentColumn={setCurrentColumn} taskArray={tasksByColumn[col.id] || []} />
           
         </div>
       )}
       
     </div>
-    <AddNewTask projectId={projectId} column={columns} tasksArray={tasksByColumn} setTaskByColumn={setTasksByColumn} showingPopup={showingPopup} setShowingPopup={setShowingPopup} currentColumn={currentColumn}></AddNewTask>
+    <AddNewTask  projectId={projectId} column={columns} tasksArray={tasksByColumn} setTaskByColumn={setTasksByColumn} showingPopup={showingPopup} setShowingPopup={setShowingPopup} currentColumn={currentColumn}></AddNewTask>
     </>
   );
 }

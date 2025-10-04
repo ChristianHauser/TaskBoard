@@ -34,3 +34,13 @@ export async function getColumns(projectId){
     return await res.json();
     
 }
+
+export async function setProjectName(projectName,projectId){
+    const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/index.php?q=set-project-name", {
+        method:"POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({projectName,projectId}),
+
+    })
+    return await res.json();
+}

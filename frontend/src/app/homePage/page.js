@@ -2,7 +2,7 @@
 import {auth,useAuth} from "../firebaseConfig/firebaseInit";
 
 import { onAuthStateChanged } from "firebase/auth";
-import{verifyToken,getproject} from "../api/getprojects.js";
+import{verifyToken,getproject} from "../api/homePageApiCalls.js";
 import { useEffect, useState } from "react";
 import ProjectList from "../Components/ProjectList/ProjectList";
 import Header from "../Components/Header/Header";

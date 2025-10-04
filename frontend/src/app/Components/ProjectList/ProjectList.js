@@ -7,6 +7,7 @@ export default function ProjectList({projects,user}){
         const router = useRouter();
         
         const routeToProj = ((projName,projId) => {
+               
                 router.push(`/project/${slugify(projName,{lower:true})}-${projId}`);
         });
         
@@ -18,7 +19,7 @@ export default function ProjectList({projects,user}){
                         <h1 className={style.title}>Projects</h1>
 
                         <div className={style.projectsRow}>
-                        <NewProject user={user} />
+                        <NewProject user={user}  />
                         {projects.map((project) => 
                             <div key={project.project_id} className={style.projectCard} onClick={() => routeToProj(project.project_name , project.project_id)}>
                                 <p className={style.projectName}>{project.project_name} </p>

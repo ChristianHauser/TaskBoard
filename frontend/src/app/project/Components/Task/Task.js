@@ -2,10 +2,14 @@ import {useState} from "react";
 import style from "./Task.module.css";
 import formatDate from "../FormatDate/formatDate.js";
 import {useRef, useEffect} from "react";
-export default function Task({taskArray, colId, setShowingPopup,setCurrentColumn}){
+import Overlay from "../Overlay/Overlay";
+export default function Task({taskArray, colId, setShowingPopup,setCurrentColumn,showTaskPopup,setShowTaskPopup}){
     const containerRef = useRef(null);
     const lastRef = useRef(null);
     const[extraHover, setExtraHover] = useState(false);
+    const [selectedTask, setSelectedTask] = useState(null);
+
+    const open = Boolean(selectedTask);
     console.log(taskArray);
     const isOdd = taskArray?.length % 2 ===1;
     if(isOdd && lastRef){
@@ -53,8 +57,8 @@ export default function Task({taskArray, colId, setShowingPopup,setCurrentColumn
             {taskArray.map(task=> {
                 return(
                     //Einzellnen Tasks
-                    <div className={style.singleTask}key={task.id}>
-                        {task.head_line}<br></br>
+                    <div onClick={()=>{setSelectedTask(task);setShowTaskPopup(true);}} className={style.singleTask}key={task.id}>
+                        <p className={style.headLine}>{task.head_line}</p><br></br>
                         <span className={style.createdAt}>{formatDate(task.created_at)}</span>
                         <span className={style.assignedUser}>{task.assigned_user_id}</span>
                     </div>
@@ -62,6 +66,12 @@ export default function Task({taskArray, colId, setShowingPopup,setCurrentColumn
                 );
                 
             })}
+
+            {showTaskPopup && selectedTask &&(<Overlay open={open} onClose={()=> setSelectedTask(null)}>
+                
+                <p>{selectedTask.head_line}</p>
+                <p>{selectedTask.content}</p>
+                </Overlay>)}
             
             {isOdd && <div onMouseLeave={()=> setExtraHover(false)} onMouseEnter={()=> setExtraHover(true)}onClick={(e)=>{
                 e.preventDefault();

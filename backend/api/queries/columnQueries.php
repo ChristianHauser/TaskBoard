@@ -7,3 +7,4 @@ function getTasksOfColumnId($pdo, $columnId){
     $stmt->execute([$columnId]);
     return $stmt->fetchAll();
 }
+

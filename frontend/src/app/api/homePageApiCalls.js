@@ -33,3 +33,16 @@ export async function getproject(uid){
         
     
 }
+
+export async function getProjectName(projId){
+
+    const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/index.php?q=get-project-name", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({projId})
+         
+    });
+    
+    const dataObj = await res.json();
+    return dataObj.projName;
+}

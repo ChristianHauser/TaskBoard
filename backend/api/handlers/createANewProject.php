@@ -31,7 +31,7 @@ if($data){
         $projectId = insertNewProjectNameAndReturnId($pdo,$defaultProjName);
 
 
-
+        insertTemplateColumns($pdo,$projectId);
         //Now Insert Project id and userid into users_of_projects table
         $defaultRole = "owner";
         insertNewProjectIntoUOP($pdo,$defaultRole,$userId,$projectId);

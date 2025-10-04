@@ -1,17 +1,28 @@
-.overLayConentContainer{
+/* backdrop */
+.overLay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: rgba(0, 0, 0, 0.5);
+  display: grid;
+  place-items: center;
+}
+
+/* content container (fixed the typo: Conent -> Content) */
+.overLayContentContainer {
   background: #888888;
   border-radius: 12px;
   padding: 1rem;
   max-width: 600px;
   width: min(90vw, 600px);
+  z-index: 9999;
 }
 
-
-.overlay{
-  position: fixed;
-  inset: 0;
-  z-index: 9999;           
-  background: rgba(0, 0, 0, 0.5);
-  display: grid;
-  place-items: center;
+.closeButton{
+  background-color: gray;
+  color: white;
+  padding: 1em;
+  border: 2px white solid;
+  border-radius: 1em;
+  float: right;
 }

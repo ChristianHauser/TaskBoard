@@ -2,25 +2,30 @@
     display: grid;
     
     grid-template-rows: 1fr 8fr;
-    background-color: red;
-    
+    background-color: rgb(0, 0, 240);
+    border-radius: 1em;
     min-height: 50em;  
+    
     
 
 }
+
 
 .allColumns{
     
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 16px; /* space between columns */
-    background-color: orange;
+    
     padding: 10px;
     min-height: 300px;
+    font-family: 'Inter', sans-serif;
     
 }
 
 .colTitle{
     display: grid;
     place-items: center;
+    font-weight: 1000;
+    font-size: larger;
 }

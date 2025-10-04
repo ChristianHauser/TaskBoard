@@ -23,3 +23,29 @@ function insertNewProjectNameAndReturnId($pdo, $projName){
     $projectStmt->execute([$projName]);
     return $pdo->lastInsertId();
 }
+
+function insertTemplateColumns($pdo, $projectId){
+    
+    $templateSql = "INSERT INTO `columns` (project_id,`name`,position) SELECT :project_id,`name`,position FROM column_template ORDER BY position";
+    $templateStmt = $pdo->prepare($templateSql);
+    $templateStmt->execute([":project_id"=> $projectId]);
+    
+}
+function getProjectName($pdo,$projId){
+    $projNameSql = "SELECT project_name FROM projects WHERE id=?";
+    $nameStmt = $pdo->prepare($projNameSql);
+    $nameStmt->execute([$projId]);
+
+    return $nameStmt->fetch();
+}
+
+function setProjectName($pdo,$projName, $projId){
+    try{
+        $setNameStmt = $pdo->prepare("UPDATE projects SET project_name=? WHERE id=?");
+        $setNameStmt->execute([$projName, $projId]);
+        return $setNameStmt->rowCount();   
+    } catch (PDOException $e) {
+    error_log("DB error: " . $e->getMessage());
+    return false;
+    }
+}
