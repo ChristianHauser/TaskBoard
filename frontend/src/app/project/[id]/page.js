@@ -59,10 +59,11 @@ export default function project(){
     //<Header user={user}></Header> <h2 className={style.projName}>{projName}</h2>
     
    
-    const handleCommit = async (text)=>{
+    const handleCommit = async (text, prevText)=>{
         const finalText = text || "Unbennantes Projekt";
-        const prev = finalText;
+        const prev = projName;
         setProjName(finalText);
+        if(finalText === prev) return;
         try{
             await setProjectName(finalText,projectId);
             console.log("changedName");
@@ -77,7 +78,7 @@ export default function project(){
     
     return(
         <div>
-            <EditTextField value={projName} placeholder={"Unbennantes Projekt"}onCommit={handleCommit}></EditTextField>
+            <EditTextField value={projName} placeholder={""}onCommit={handleCommit}></EditTextField>
             
             <Column projectId={projectId}></Column>
             

@@ -1,9 +1,10 @@
 import { getColumns } from "../../apiCall/taskBoardApiCalls.js";
 import { getTasks } from "../../apiCall/taskBoardApiCalls.js";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef} from "react";
 import Task from "../Task/Task.js";
 import style from "./Column.module.css";
 import AddNewTask from "../../Components/AddNewTask/AddNewTask.js";
+import EditTextField from "../EditTextField/EditTextField.js";
 
 export default function Column({ projectId }) {
   const [columns, setColumns] = useState([]);
@@ -11,6 +12,8 @@ export default function Column({ projectId }) {
   const [showingPopup, setShowingPopup] = useState(false);
   const [currentColumn, setCurrentColumn] = useState();
   const [showTaskPopup,setShowTaskPopup] = useState(false);
+  const [columnName, setColumnName] = useState();
+  
   useEffect(() => {
     let isMounted = true;
     getData(isMounted);
@@ -43,6 +46,16 @@ export default function Column({ projectId }) {
       }
     }  
 
+    const handleCommit = (text,colName)=>{
+      const finalText = text || "Unbennante Zeile";
+      const prev = colName;
+      if(finalText === prev)return;
+      console.log(prev);
+      setColumnName(finalText);
+      
+
+    }
+
   return (
     <>
     <div className={style.allColumns}>
@@ -50,6 +63,9 @@ export default function Column({ projectId }) {
       {columns.map(col => 
         <div className={style.singleColumn} key={col.id}>
           <div  className={style.colTitle}>{col.name}</div>
+          
+          <EditTextField value={col.name} placeholder={""} onCommit={(text) => handleCommit(text,col.name)}></EditTextField>
+          
           <Task showTaskPopup={showTaskPopup} setShowTaskPopup={setShowTaskPopup} colId={col.id} setShowingPopup={setShowingPopup} setCurrentColumn={setCurrentColumn} taskArray={tasksByColumn[col.id] || []} />
           
         </div>

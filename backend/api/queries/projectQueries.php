@@ -1,7 +1,7 @@
 <?php 
 
 function getColumnsOfProjectWithId($pdo,$projectId){
-    $projStmt = $pdo->prepare("SELECT * FROM columns WHERE project_id = ?");
+    $projStmt = $pdo->prepare("SELECT * FROM columns WHERE project_id = ? ORDER BY position");
         $projStmt->execute([$projectId]);  
         return $projStmt->fetchAll();
 }

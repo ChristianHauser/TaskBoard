@@ -10,7 +10,7 @@ export default function Task({taskArray, colId, setShowingPopup,setCurrentColumn
     const [selectedTask, setSelectedTask] = useState(null);
 
     const open = Boolean(selectedTask);
-    console.log(taskArray);
+    
     const isOdd = taskArray?.length % 2 ===1;
     if(isOdd && lastRef){
         lastRef.current.style.setProperty("--topRight", "0");
