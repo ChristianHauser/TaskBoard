@@ -35,10 +35,11 @@ useEffect(() => {
 
 return(
     <>
-    
+    <div className="mainContainer">
     <Header user={user}></Header>
     
     <ProjectList projects={projects} user= {user}></ProjectList>
+    </div>
     </>
 )
 

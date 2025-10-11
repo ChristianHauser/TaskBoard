@@ -1,18 +1,83 @@
-
-.addTaskContainer {
-  background: #888888;
-  border-radius: 12px;
-  padding: 1rem;
-  max-width: 600px;
-  width: min(90vw, 600px);
+.formContainer{
+  display: grid;
+  grid-template-rows: auto;
 }
 
+.labelTitle{
+  font-size: 0.9em;
+  padding-bottom: 0.3em;
+  padding-top: 0.3em;
+}
+.labelTitle:first-child{
+  padding-top: 0;
+}
 
-.overlay{
-  position: fixed;
-  inset: 0;
-  z-index: 9999;            /* above everything */
-  background: rgba(0, 0, 0, 0.5);
-  display: grid;
-  place-items: center;
+.inputField{
+  border-radius: 0.3rem;
+  font-weight: 400;
+  padding-left: 0.7em;
+  padding-right: 0.7em;
+}
+
+.selectField{
+  float: right;
+  font-weight: 500;
+  
+}
+.textArea{
+  
+  height: 20rem;
+  width: 100%;
+  background-color: white;
+  resize: none;
+  border-radius: 0.3rem;
+  font-weight: 400;
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+}
+
+.textArea::-webkit-scrollbar {
+  width: 8px;
+}
+.textArea::-webkit-scrollbar-track {
+  background: #eee;
+  
+}
+.textArea::-webkit-scrollbar-thumb {
+  background: #00a2e2;
+  border-radius: 4px;
+  
+}
+.textArea::-webkit-scrollbar-thumb:hover {
+  background: #00a2e2;
+}
+
+.submitButton{
+ 
+ margin-top: 35px;
+ font-size: 16px;
+ padding: 16px;
+ border-radius: 1em;
+ height: 56px;
+ font-weight: 500;
+ background-color: white;
+ color: #00a2e2;
+ width: 7em;
+ place-self: start;
+ transition: 0.2s  ease-in-out;
+ 
+}
+
+.submitButton:hover{
+  cursor: pointer;
+  transform: scale(1.04);
+  color: white;
+  box-shadow:  2px 2px 5px rgb(82, 82, 82);
+  
+  background-color: #00a2e2;
+}
+
+.zeileTitle{
+  font-weight: 500;
+  font-size: 0.9em;
 }

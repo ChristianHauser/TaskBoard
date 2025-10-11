@@ -50,7 +50,7 @@ export default function LoginPage() {
   
 
   return (
-    <div className='mainContainer'>
+    <div className='loginContainer'>
         <form onSubmit={handleSubmit}>
             <label htmlFor='email'>Email</label> <br/>
             <input

@@ -78,8 +78,9 @@ export default function project(){
     
     return(
         <div>
+            <div className="projNameTitle">
             <EditTextField value={projName} placeholder={""}onCommit={handleCommit}></EditTextField>
-            
+            </div>
             <Column projectId={projectId}></Column>
             
         </div>

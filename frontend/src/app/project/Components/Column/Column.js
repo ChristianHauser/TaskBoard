@@ -1,5 +1,5 @@
 import { getColumns } from "../../apiCall/taskBoardApiCalls.js";
-import { getTasks } from "../../apiCall/taskBoardApiCalls.js";
+import { getTasks,setColumnName,getBoard } from "../../apiCall/taskBoardApiCalls.js";
 import { useState, useEffect, useRef} from "react";
 import Task from "../Task/Task.js";
 import style from "./Column.module.css";
@@ -12,7 +12,7 @@ export default function Column({ projectId }) {
   const [showingPopup, setShowingPopup] = useState(false);
   const [currentColumn, setCurrentColumn] = useState();
   const [showTaskPopup,setShowTaskPopup] = useState(false);
-  const [columnName, setColumnName] = useState();
+  //const [columnName, setColumnName] = useState();
   
   useEffect(() => {
     let isMounted = true;
@@ -26,6 +26,7 @@ export default function Column({ projectId }) {
   async function getData(isMounted) {
     if(!isMounted) return;
     console.log("GET DATA BEING CALLED")
+    
       const result = await getColumns(projectId);
       const columnsArray = result.columnsOfProj || [];
       
@@ -43,16 +44,25 @@ export default function Column({ projectId }) {
         });
 
         setTasksByColumn(newTasksByColumn);
+        console.log(tasksByColumn);
       }
     }  
 
-    const handleCommit = (text,colName)=>{
-      const finalText = text || "Unbennante Zeile";
+    const handleCommit = async(text,colId,colName)=>{
+      const finalText = text?.trim() || "Unbenannte Zeile";
       const prev = colName;
       if(finalText === prev)return;
-      console.log(prev);
-      setColumnName(finalText);
+      console.log(columns);
+
+      setColumns(curr =>
+        curr.map(c=> (c.id === colId) ? {...c, name:finalText} : c));
+
       
+      await setColumnName(colId,finalText);
+     
+      
+      console.log(columns);
+      //<div  className={style.colTitle}>{col.name}</div>
 
     }
 
@@ -62,10 +72,10 @@ export default function Column({ projectId }) {
       
       {columns.map(col => 
         <div className={style.singleColumn} key={col.id}>
-          <div  className={style.colTitle}>{col.name}</div>
           
-          <EditTextField value={col.name} placeholder={""} onCommit={(text) => handleCommit(text,col.name)}></EditTextField>
-          
+          <div className={style.columnName}>
+          <EditTextField  value={col.name} placeholder={"Unbennante Zeile"} onCommit={(text) => handleCommit(text,col.id,col.name)}></EditTextField>
+          </div>
           <Task showTaskPopup={showTaskPopup} setShowTaskPopup={setShowTaskPopup} colId={col.id} setShowingPopup={setShowingPopup} setCurrentColumn={setCurrentColumn} taskArray={tasksByColumn[col.id] || []} />
           
         </div>

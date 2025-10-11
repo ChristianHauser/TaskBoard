@@ -49,3 +49,13 @@ function setProjectName($pdo,$projName, $projId){
     return false;
     }
 }
+
+function getBoard($pdo, $userId, $projId){
+
+    $sql = "SELECT * tasks JOIN columns WHERE project_id = ? ON tasks.project_id = columns.project_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$projId]);
+    $boardData = $stmt->fetchAll();
+
+    return $boardData;
+}

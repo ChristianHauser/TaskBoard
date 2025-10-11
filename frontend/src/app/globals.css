@@ -22,19 +22,43 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.loginContainer{
+ display: flex;
+ padding: 2em;
+ flex-direction: column;
+ max-width: fit-content;
+ margin: auto;
+ min-height: 50em;
+  
+ align-self:center; 
+ justify-content: center;
+background-color: #00a2e2;
+  
+  
+  
 }
 
 .mainContainer{
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+ padding: 2em;
+ flex-direction: column;
+ max-width: fit-content;
+ margin: auto;
+ min-height: 50em;
+  
+ align-self:center; 
+ justify-content: center;
+background-color: #00a2e2;
 }
 
-form{
-  
+.projNameTitle{
+  font-size: 1.6em;
 }
+
 
 input{
   background-color: white;

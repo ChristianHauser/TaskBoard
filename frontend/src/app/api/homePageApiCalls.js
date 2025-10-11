@@ -19,7 +19,7 @@ export async function verifyToken(tokenId){
 } 
 
 export async function getproject(uid){
-
+    
     const res = await fetch("http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/index.php?q=get-all-projects-of-user", {
         method: "POST",
         headers: {"Content-Type": "application/json"},

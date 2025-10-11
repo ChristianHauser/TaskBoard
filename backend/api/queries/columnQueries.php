@@ -8,3 +8,10 @@ function getTasksOfColumnId($pdo, $columnId){
     return $stmt->fetchAll();
 }
 
+function setNameOfColumnId($pdo,$colId,$colName){
+
+    $sql = "UPDATE columns SET name = ? WHERE id = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt -> execute([$colName,$colId]);
+
+}

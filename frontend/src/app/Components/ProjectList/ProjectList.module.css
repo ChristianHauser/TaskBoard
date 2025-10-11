@@ -2,10 +2,11 @@
   display: flex;
   justify-content: center; 
   padding: 2rem;
+  padding-bottom: 1em;
   
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   
-
+  border-bottom: 1px solid white;
 }
 
 .contentBox {
@@ -16,23 +17,24 @@
   gap: 1rem;
 }
 
-.title {
-  margin: 0;
-  padding: 0;
-}
+
 
 .projectsRow {
   display: flex;
   flex-direction: row;
   gap: 1rem;
   flex-wrap: wrap;
+  padding-top: 0.5em;
+  padding-bottom: 1em;
 }
 
 .title{
-    font-weight: 650;
+  color: rgb(255, 255, 255);
+    font-weight: 550;
     font-size: 1.5em;
     padding-bottom: 0.5em;
     border-bottom: 1px solid white;
+    font-family:  Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
 }
 .projectCard{
     display: flex;

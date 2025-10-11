@@ -37,13 +37,12 @@ export default function AddNewTask({column, projectId, tasksByColumn, setTaskByC
             
             <Overlay open={showingPopup} onClose={()=> setShowingPopup(false)} >
             
-            <form onSubmit={handleSubmit}>
-                <label>Aufgabentitel:</label>
-                <input name="headline"></input>
-                <label>Beschreibung:</label>
-                <input name="content"></input>
-                <label>Column:</label>
-                <select name="column" defaultValue={currentColumn}>
+            <form className={style.formContainer} onSubmit={(e)=>{handleSubmit(e);setShowingPopup(false);}}>
+                <label className={style.labelTitle}>Aufgabentitel:</label>
+                <input required className={style.inputField} name="headline"></input>
+                <label className={style.labelTitle}>Beschreibung:</label>
+                <textarea className={style.textArea} name="content"></textarea>
+                <label className={style.zeileTitle}>Zeile: <select className={style.selectField} name="column" defaultValue={currentColumn}>
                     {
                         column.map(element => {
                             return(
@@ -56,8 +55,9 @@ export default function AddNewTask({column, projectId, tasksByColumn, setTaskByC
                     
 
                     
-                </select>
-                <button type="submit">Submit</button>
+                </select></label>
+                
+                <button className={style.submitButton} type="submit">Submit</button>
                 
             </form>
 

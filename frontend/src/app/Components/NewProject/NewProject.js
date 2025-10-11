@@ -42,7 +42,7 @@ export default function NewProject({user}){
         
     }
     return(
-        <div className={styles.newProject} onClick={createNewProject}>
+        <div className={styles.newProject} title="Neues Projekt Erstellen" onClick={createNewProject}>
             <p className={styles.text}>Add new Project</p>
             <AiOutlinePlus size={28} className={styles.icon}/>
         </div>

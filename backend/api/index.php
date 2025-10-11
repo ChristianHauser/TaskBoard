@@ -36,6 +36,14 @@ switch($path){
     case "set-project-name":
         require_once __DIR__ ."/handlers/setProjectName.php";
         break;
+
+    case "set-column-name":
+        require_once __DIR__ . "/handlers/setColumnName.php";
+        break;
+        
+    case "get-board":
+        require_once __DIR__ . "/handlers/getBoard.php";
+        break;
     default:
         http_response_code(404);
         echo json_encode(['error' => 'Endpoint not found']);

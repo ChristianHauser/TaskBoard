@@ -30,13 +30,13 @@ export default function EditTextField({value,placeholder,onCommit}){
     return(
     <>
       {!editMode ? (
-        <h1 className={style.projName} onMouseDown={(e) => {
+        <div className={style.title} onMouseDown={(e) => {
           e.preventDefault();
           setEditMode(true);
 
-        }}>{text || placeholder}</h1>
+        }}>{text || placeholder}</div>
       ) : (
-        <input className={`${style.projName} ${style.input}`}
+        <input className={`${style.title} ${style.input}`}
           ref={inputRef}
           type="text"
           value={text}
@@ -50,6 +50,7 @@ export default function EditTextField({value,placeholder,onCommit}){
               commit();
             }
           }}
+          maxLength={30}
           
         />
       )}

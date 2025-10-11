@@ -1,28 +1,45 @@
 .singleTask{
     position: relative;
-    display: grid;
+    
     background-color: rgb(255, 255, 255);
-    place-items: center;
-    padding: 2em;
+    
+    
+    display: flex;
+    
+    flex-direction: column;
+    
+    justify-content: center;
+    padding: 1em;
     color: black;
-    border: 2px black solid;
+    
     border-radius: 1em 1em;
     min-height: 5em;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     
+    
+}
+.holding{
+    background: red; 
+    user-select: none; 
+    z-index: 20;
+
 }
 
-.headLine { 
+.headLine{ 
     
-    font-weight: 600;
-
+    font-weight: 550;
+    
+    text-align: center;
+    
+    
 }
 
 
 .singleTask:hover{
-    
+    cursor: pointer;
     transform: scale(1.02);
-    box-shadow: 0 8px 20px black;
+    
+    
 }
 
 .createdAt{
@@ -44,28 +61,135 @@
 
 .taskContainer{
     padding: 1em;
+    padding-top: 0;
     display: grid;
     grid-template-columns: repeat(2,1fr);
-    overflow: hidden;
+    
     gap: 0.5em;
     grid-auto-rows: 5em;
-    height: 80dvh;  
-    overflow: hidden;
+    height: 49em;  
+    overflow: visible;
+    
+    
     
 }
     
 .addTask{
     color: black;
-    background-color: white;
+    background-color: rgba(165, 165, 165, 0.7);
     opacity: 0.5;
     padding: 2em;
     border-radius: 1em 1em;
     
+    
+    
+}
+.plusIcon{
+    
+    color: black;
+    height: 2.5em;
+    width: 2.5em;
+    stroke-width: 1px;
+    align-self: center;
+    justify-self: center;
+}
+.taskTitle{
+    padding-bottom: 1em;
+
+}
+.bottomIconWrapper{
+    
+    position: absolute;
+    padding: 1em;
+    padding-top: 0;
+    padding-bottom: 0;
+    top: 95%;
+    display: flex;
+    flex-direction: row;
+    
+    justify-content: flex-end;
+    width: 80%;
+    
+    
+    
+}
+.editIcon{
+    margin-left: 20em;
+    height: 2.2em;
+    width: 2.2em;
+}
+.arrowButton{
+    color: white;
+    background-color: rgba(0, 245, 0, 0.51);
+    border-radius: 100%;
+    width: 5em;
+    height: 56px;
+    left: 80%;
+    transition: 0.2s ease-in-out;
+    position: absolute;
+    border-radius: 1em;
+    bottom: 5%;
+}
+.arrowButton:hover{
+    cursor: pointer;
+    place-self: center;
+    box-shadow:  2px 2px 5px rgba(82, 82, 82, 0.445);
+    background-color: rgb(0, 245, 0);
+}
+.arrowIcon{
+    height: 2em;
+    width: 2em;
+    place-self: center;
+    
+    
+}
+.threeDotsIcon{
+    
+    height: 1.5em;
+    width: 1.5em;
+    
+    
 }
 
+.taskText{
+   
+    height:fit-content;
+    max-height: 400px;
+    overflow-y:auto;
+    
+    margin-bottom: 2em;
+    background-color: white;
+    padding: 1em;
+    border-radius: 0.5em;
+
+}
+.butIcon{
+    height: 1.5em;
+    width: 1.5em;
+    place-self: center;
+    color: black;
+    stroke-width: 1em;
+}
+
+.closeButton{
+    height: 2.5em;
+    width: 2.5em;
+    position: absolute;
+    right: 3%;
+    top: 2.5%;
+    transition: 0.2s ease-in-out;
+    padding: 0.5em;
+    border-radius: 100%;
+}
+
+.closeButton:hover{
+
+    background: rgba(0, 0, 0, 0.064);
+   
+}
 
 .ghost{
-    background-color: white;
+    background-color: rgba(165, 165, 165, 0.7);
     
     opacity: 0.5;
     padding: 2em;
@@ -73,6 +197,7 @@
     border-radius: 1em 1em 0em 0em;
     min-height: 5.5em;
       
+    
 }
 
 .taskContainer > :last-child{
@@ -91,11 +216,12 @@
 
 
 .taskContainer.extraHover .addTask{
-  background-color: rgb(200, 200, 200);
+  background-color: white;
 
+  cursor: pointer;
   
 }
 .taskContainer.extraHover .ghost{
-  background-color: rgb(200, 200, 200);
-  
+  background-color: white;
+  cursor: pointer;
 }
