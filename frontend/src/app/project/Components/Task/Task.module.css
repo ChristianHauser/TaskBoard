@@ -22,6 +22,7 @@
     background: red; 
     user-select: none; 
     z-index: 20;
+    pointer-events: none;
 
 }
 

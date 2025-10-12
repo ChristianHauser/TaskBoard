@@ -9,33 +9,22 @@ import { MdOutlineEdit } from "react-icons/md";
 import { FaCheck } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import { HiOutlinePlus } from "react-icons/hi2";
-//import useLongPress from "../Utils/longPress";
+import useLongPress from "../Utils/longPress";
 
 
-export default function Task({taskArray, colId, setShowingPopup,setCurrentColumn,showTaskPopup,setShowTaskPopup}){
+export default function Task({taskArray, colId, setShowingPopup,setCurrentColumn,showTaskPopup,setShowTaskPopup, moveTask}){
     const containerRef = useRef(null);
     const lastRef = useRef(null);
+
     const[extraHover, setExtraHover] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
-    const [isHolding, setIsHolding] = useState(false);
-    const [absolute, setAbsolute] = useState(false);
-
-    //HTML Div Postitioning
-    //const [curTarg , setCurTarg] = useState(null);
-    const curTarg = useRef(null);
-    const boundRec = useRef(null);
-    //const [boundRec, setBoundRec] = useState(null);
 
     const open = Boolean(selectedTask);
-    const longPressMs = 200; // tweak to taste
+    const longPressMs = 200;
+    const lp = useLongPress({ pressMs: longPressMs, holdingClass: style.holding });
 
-    const timerRef = useRef(null);
-    const longPressedRef = useRef(false);
-    const ignoreNextClickRef = useRef(false);
     const isOdd = taskArray?.length % 2 ===1;
 
-    //MouseListener für position?
-    
     
     useEffect(() => {
         if (!lastRef.current) return;
@@ -73,75 +62,41 @@ export default function Task({taskArray, colId, setShowingPopup,setCurrentColumn
   return () => ro.disconnect();
 }, [taskArray.length]);
 
-
-    const onPointerDown = (e, task) => {
-        const eT = (e.currentTarget);
-        curTarg.current = eT;
-        boundRec.current = eT.getBoundingClientRect();
+const onPointerDown = (e, task) => {
+  lp.onPointerDown(e, () => {
+    setSelectedTask(task);
+  });
+};
     
-        e.currentTarget.setPointerCapture(e.pointerId);
-        longPressedRef.current = false;
-        ignoreNextClickRef.current = false;
-
-        timerRef.current = setTimeout(() => {
-        console.log("CURRENTTARGET");
-        curTarg.current.classList.add(style.holding);
-        longPressedRef.current = true;
-        ignoreNextClickRef.current = true;
-
-        //Hold Actions
-
-        setIsHolding(true);
-        setSelectedTask(task);
-        
-        
-     }, longPressMs);
-    };
-
 const onPointerMove = (e) => {
-  if (!isHolding) return;
-  
-    // + (boundRec.bottom/2)   + (boundRec.right/2)
-    if(curTarg.current && boundRec.current){
-
-        curTarg.current.style.top = (e.clientY) -(boundRec.current.bottom-5) + "px";
-        curTarg.current.style.left = (e.clientX) - ((boundRec.current.right-boundRec.current.left)/2 + boundRec.current.left)+ "px";
-        
-    }
+  if (!lp.isHolding) return;
+  const el = lp.curTargRef.current;
+  const rect = lp.boundRecRef.current;
+  if (el && rect) {
+    el.style.top  = `${e.clientY - (rect.bottom - 5)}px`;
+    el.style.left = `${e.clientX - ((rect.right - rect.left)/2 + rect.left)}px`;
     
-    
-  //console.log(e.clientX)
-};
-
-const cancelHold = () => {
-    try { e.currentTarget.releasePointerCapture(e.pointerId); } catch {}
-  setIsHolding(false);
-  
-  clearTimeout(timerRef.current);
-  timerRef.current = null;
-};
-
-const onPointerUp = (e) => {
-  cancelHold();
-  //e.currentTarget.style.position = "relative";
-  curTarg.current.classList.remove(style.holding);
-  if (!longPressedRef.current) {
-    //Click Actions
-    
+    console.log(document.elementFromPoint(e.clientX,e.clientY));
   }
+  
 };
+
+const cancelHold = (e) => lp.cancelHold(e);
+const onPointerUp = (e) => lp.onPointerUp(e);
+
+
+
 
 const onClick = (e, task) => {
-  if (ignoreNextClickRef.current) {
-    e.preventDefault();
-    e.stopPropagation();
-    return;
-  }
-  setShowTaskPopup(true);
-  setSelectedTask(task);
-  setIsHolding(false);
-  
-};
+  if (lp.shouldIgnoreClick()) {
+     e.preventDefault();
+     e.stopPropagation();
+     return;
+   }
+   setShowTaskPopup(true);
+   setSelectedTask(task);
+
+ };
     if(taskArray){
         return(
         
@@ -151,11 +106,13 @@ const onClick = (e, task) => {
                     //Einzellnen Tasks
                     //Mouse Position getten und div moven
                     <div className={style.singleTask} key={task.id} 
-                        onPointerDown={(e) =>{onPointerDown(e, task)} }
+
+                        onPointerDown={(e) => onPointerDown(e, task)}
                         onPointerMove={onPointerMove}
                         onPointerUp={onPointerUp}
-                        onPointerLeave={cancelHold}
-                        onClick={(e) => onClick(e, task)}>
+                        onPointerLeave={(e) => cancelHold(e)}
+                        onClick={(e) =>{ onClick(e, task);moveTask(task.id,colId)}}
+                        >
                         <p className={style.headLine}>{task.head_line}</p>
                         <span className={style.createdAt}>{formatDate(task.created_at)}</span>
                         <span className={style.assignedUser}>{task.assigned_user_id}</span>

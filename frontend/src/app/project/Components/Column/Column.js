@@ -44,10 +44,15 @@ export default function Column({ projectId }) {
         });
 
         setTasksByColumn(newTasksByColumn);
-        console.log(tasksByColumn);
+        
       }
     }  
 
+    useEffect (()=>{
+      if(tasksByColumn){
+        console.log(tasksByColumn);
+      }
+    },[tasksByColumn])
     const handleCommit = async(text,colId,colName)=>{
       const finalText = text?.trim() || "Unbenannte Zeile";
       const prev = colName;
@@ -66,6 +71,24 @@ export default function Column({ projectId }) {
 
     }
 
+    const handleTaskMove = async(taskId,fromColId,toColId)=>{
+
+      setTasksByColumn(prev =>{
+        const from = prev[fromColId] ?? [];
+        const to = prev[toColId] ?? [];
+        const task = from.find(t => t.id === taskId);
+
+        return{
+          ...prev,
+          [fromColId]: from.filter(t => t.id !== taskId),
+          [toColId]: [task, ...to],
+        };
+
+      });
+      
+
+    };
+
   return (
     <>
     <div className={style.allColumns}>
@@ -76,7 +99,7 @@ export default function Column({ projectId }) {
           <div className={style.columnName}>
           <EditTextField  value={col.name} placeholder={"Unbennante Zeile"} onCommit={(text) => handleCommit(text,col.id,col.name)}></EditTextField>
           </div>
-          <Task showTaskPopup={showTaskPopup} setShowTaskPopup={setShowTaskPopup} colId={col.id} setShowingPopup={setShowingPopup} setCurrentColumn={setCurrentColumn} taskArray={tasksByColumn[col.id] || []} />
+          <Task moveTask={(taskId,fromColId)=>handleTaskMove(taskId,fromColId,3)} showTaskPopup={showTaskPopup} setShowTaskPopup={setShowTaskPopup} colId={col.id} setShowingPopup={setShowingPopup} setCurrentColumn={setCurrentColumn} taskArray={tasksByColumn[col.id] || []} />
           
         </div>
       )}
