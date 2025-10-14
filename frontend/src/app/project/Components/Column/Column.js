@@ -12,7 +12,8 @@ export default function Column({ projectId }) {
   const [showingPopup, setShowingPopup] = useState(false);
   const [currentColumn, setCurrentColumn] = useState();
   const [showTaskPopup,setShowTaskPopup] = useState(false);
-  //const [columnName, setColumnName] = useState();
+
+  const [columnId, setColumnId] = useState();
   
   useEffect(() => {
     let isMounted = true;
@@ -71,21 +72,35 @@ export default function Column({ projectId }) {
 
     }
 
-    const handleTaskMove = async(taskId,fromColId,toColId)=>{
-
+    const handleTaskMove = async(taskId,fromColId,colRef,curTargRef)=>{
+      console.log(fromColId);
+      
+      let colRefId = (colRef.current?.dataset?.colId ?? fromColId);
+     console.log(colRefId);
+      
+      if(parseInt(fromColId) === parseInt(colRefId)){
+        
+        curTargRef.current.style.top =  "0px";
+        curTargRef.current.style.left = "0px";
+        
+        setTasksByColumn(prev=> prev);
+        return;
+      } 
       setTasksByColumn(prev =>{
+        
         const from = prev[fromColId] ?? [];
-        const to = prev[toColId] ?? [];
+        const to = prev[colRefId] ?? [];
         const task = from.find(t => t.id === taskId);
-
+        const taskWithColId = {...task, column_id: colRefId};
+        
         return{
           ...prev,
           [fromColId]: from.filter(t => t.id !== taskId),
-          [toColId]: [task, ...to],
+          [colRefId]: [...to, taskWithColId],
         };
 
       });
-      
+      //Database actually changing stuff
 
     };
 
@@ -94,12 +109,12 @@ export default function Column({ projectId }) {
     <div className={style.allColumns}>
       
       {columns.map(col => 
-        <div className={style.singleColumn} key={col.id}>
+        <div className={style.singleColumn} key={col.id} data-col-id={col.id}>
           
           <div className={style.columnName}>
           <EditTextField  value={col.name} placeholder={"Unbennante Zeile"} onCommit={(text) => handleCommit(text,col.id,col.name)}></EditTextField>
           </div>
-          <Task moveTask={(taskId,fromColId)=>handleTaskMove(taskId,fromColId,3)} showTaskPopup={showTaskPopup} setShowTaskPopup={setShowTaskPopup} colId={col.id} setShowingPopup={setShowingPopup} setCurrentColumn={setCurrentColumn} taskArray={tasksByColumn[col.id] || []} />
+          <Task moveTask={(taskId,fromColId,curTargRef,colRef)=>handleTaskMove(taskId,fromColId,colRef,curTargRef)} showTaskPopup={showTaskPopup} setShowTaskPopup={setShowTaskPopup} colId={col.id} setShowingPopup={setShowingPopup} setCurrentColumn={setCurrentColumn} taskArray={tasksByColumn[col.id] || []} />
           
         </div>
       )}

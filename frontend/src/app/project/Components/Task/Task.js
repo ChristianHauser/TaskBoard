@@ -15,9 +15,11 @@ import useLongPress from "../Utils/longPress";
 export default function Task({taskArray, colId, setShowingPopup,setCurrentColumn,showTaskPopup,setShowTaskPopup, moveTask}){
     const containerRef = useRef(null);
     const lastRef = useRef(null);
-
+    const colRef = useRef(null);
     const[extraHover, setExtraHover] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
+
+    const test = false;
 
     const open = Boolean(selectedTask);
     const longPressMs = 200;
@@ -64,6 +66,7 @@ export default function Task({taskArray, colId, setShowingPopup,setCurrentColumn
 
 const onPointerDown = (e, task) => {
   lp.onPointerDown(e, () => {
+    
     setSelectedTask(task);
   });
 };
@@ -76,7 +79,7 @@ const onPointerMove = (e) => {
     el.style.top  = `${e.clientY - (rect.bottom - 5)}px`;
     el.style.left = `${e.clientX - ((rect.right - rect.left)/2 + rect.left)}px`;
     
-    console.log(document.elementFromPoint(e.clientX,e.clientY));
+    colRef.current = (document?.elementFromPoint(e.clientX,e.clientY)?.closest("[data-col-id]") ?? colId);
   }
   
 };
@@ -109,9 +112,9 @@ const onClick = (e, task) => {
 
                         onPointerDown={(e) => onPointerDown(e, task)}
                         onPointerMove={onPointerMove}
-                        onPointerUp={onPointerUp}
+                        onPointerUp={(e)=>{onPointerUp}}
                         onPointerLeave={(e) => cancelHold(e)}
-                        onClick={(e) =>{ onClick(e, task);moveTask(task.id,colId)}}
+                        onClick={(e) =>{ onClick(e, task);moveTask(task.id,colId,lp.curTargRef,colRef)}}
                         >
                         <p className={style.headLine}>{task.head_line}</p>
                         <span className={style.createdAt}>{formatDate(task.created_at)}</span>

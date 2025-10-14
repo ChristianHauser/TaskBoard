@@ -19,11 +19,13 @@
     
 }
 .holding{
-    background: red; 
+    background: rgb(255, 255, 255); 
     user-select: none; 
     z-index: 20;
     pointer-events: none;
-
+   
+    scale: 1.05;
+    
 }
 
 .headLine{ 

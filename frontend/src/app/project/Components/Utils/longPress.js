@@ -8,8 +8,11 @@ export default function useLongPress({ pressMs = 200, holdingClass } = {}) {
   const boundRecRef = useRef(null);
   const hoverRef = useRef(null);
   const [isHolding, setIsHolding] = useState(false);
+  //const [oldPos, setOldPos] = useState({});
+  
   const longPressedRef = useRef(false);
   const ignoreNextClickRef = useRef(false);
+
 
   
   useEffect(() => {
@@ -34,7 +37,8 @@ export default function useLongPress({ pressMs = 200, holdingClass } = {}) {
     const el = e.currentTarget;
     curTargRef.current = el;
     boundRecRef.current = el.getBoundingClientRect();
-
+    
+    
     el.setPointerCapture?.(e.pointerId);
     longPressedRef.current = false;
     ignoreNextClickRef.current = false;
@@ -56,6 +60,7 @@ export default function useLongPress({ pressMs = 200, holdingClass } = {}) {
       clearTimeout(timerRef.current);
       timerRef.current = null;
     }
+    
     setIsHolding(false);
     longPressedRef.current = false;
 
@@ -87,6 +92,7 @@ export default function useLongPress({ pressMs = 200, holdingClass } = {}) {
     isHolding,
     curTargRef,
     boundRecRef,
+    
     
     onPointerDown,
     onPointerUp,
