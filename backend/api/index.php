@@ -3,49 +3,25 @@ require_once __DIR__ ."/init.php";
 
 $path = $_GET['q'] ?? "";
 
-switch($path){
-    case "get-projectcolumns-by-id":
-        require_once __DIR__ ."/handlers/getProjectColumns.php";
-        break;
-    
-    case "get-all-projects-of-user":
-        require_once __DIR__ ."/handlers/getProjectsOfUser.php";
-        break;
-    
-    case "create-new-project":
-        require_once __DIR__ ."/handlers/createANewProject.php";
-        break;
-    case "verify-user-with-firebase":
-        require_once __DIR__ ."/handlers/verifyUser.php";
-        break;
-    case "register-new-user":
-        require_once __DIR__ ."/handlers/registerNewUser.php";
-        break;
-    case "get-tasks-of-column":
-        require_once __DIR__ ."/handlers/getTaskOfColumns.php";
-        break;
+$routes = [
+    "get-projectcolumns-by-id" => "getProjectColumns.php",
+    "get-all-projects-of-user" => "getProjectsOfUser.php",
+    "create-new-project" => "createANewProject.php",
+    "verify-user-with-firebase" => "verifyUser.php",
+    "register-new-user" => "registerNewUser.php",
+    "get-tasks-of-column" => "getTaskOfColumns.php",
+    "create-new-task" => "createANewTask.php",
+    "get-project-name" => "getProjectName.php",
+    "set-project-name" => "setProjectName.php",
+    "set-column-name" => "setColumnName.php",
+    "get-board" => "getBoard.php",
+    "move-task" => "moveTask.php",
+];
 
-    case "create-new-task":
-        require_once __DIR__ ."/handlers/createANewTask.php";
-        break;
-
-    case "get-project-name":
-        require_once __DIR__ ."/handlers/getProjectName.php";
-        break;
-    
-    case "set-project-name":
-        require_once __DIR__ ."/handlers/setProjectName.php";
-        break;
-
-    case "set-column-name":
-        require_once __DIR__ . "/handlers/setColumnName.php";
-        break;
-        
-    case "get-board":
-        require_once __DIR__ . "/handlers/getBoard.php";
-        break;
-    default:
-        http_response_code(404);
-        echo json_encode(['error' => 'Endpoint not found']);
-
+if (array_key_exists($path, $routes)) {
+    require_once __DIR__ . "/handlers/" . $routes[$path];
+} else {
+    http_response_code(404);
+    echo json_encode(['error' => 'Endpoint not found']);
 }
+

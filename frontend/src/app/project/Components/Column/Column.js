@@ -1,4 +1,4 @@
-import { getColumns } from "../../apiCall/taskBoardApiCalls.js";
+import { getColumns, moveTask } from "../../apiCall/taskBoardApiCalls.js";
 import { getTasks,setColumnName,getBoard } from "../../apiCall/taskBoardApiCalls.js";
 import { useState, useEffect, useRef} from "react";
 import Task from "../Task/Task.js";
@@ -101,6 +101,10 @@ export default function Column({ projectId }) {
 
       });
       //Database actually changing stuff
+      console.log(colRefId)
+      console.log(taskId)
+      await moveTask(taskId,colRefId);
+      console.log("Database önderungen")
 
     };
 

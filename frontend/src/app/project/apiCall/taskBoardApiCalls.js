@@ -1,3 +1,5 @@
+
+
 const BASE = "http://localhost/my_stuff/TaskBoard/TaskBoard/backend/api/index.php";
 
 async function jsonFetch(path, payload) {
@@ -35,4 +37,8 @@ export async function setColumnName(colId, newColName) {
 
 export async function getBoard(projId,userId) {
     return jsonFetch("?q=get-board", projId, userId);
+}
+
+export async function moveTask(taskId,colId){
+  return jsonFetch("?q=move-task", {taskId, colId});
 }
